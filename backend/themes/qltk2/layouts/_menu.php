@@ -146,6 +146,11 @@ use yii\helpers\Html;
                     <?=Html::a('<i class="fa fa-cogs"></i> Toà nhà / Phòng ở', \yii\helpers\Url::toRoute('danh-muc/toa-nha-phong-o'))?>
                 </li>
             <?php endif; ?>
+            <?php if(myAPI::isAccess2('GoiThue', 'index')):?>
+                <li>
+                    <?=Html::a('<i class="fa fa-cogs"></i> Gói thuê', \yii\helpers\Url::toRoute('goi-thue/index'))?>
+                </li>
+            <?php endif; ?>
 
             <?php if(myAPI::isAccess2('ChucNang', 'Index')):?>
             <li>

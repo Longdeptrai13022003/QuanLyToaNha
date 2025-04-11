@@ -209,8 +209,8 @@ class UserController extends Controller
 
                 ];
             }else if($model->load($request->post())){
-                if($model->validate())
-                    $model->setPassword($model->password_hash);
+//                if($model->validate())
+//                    $model->setPassword($model->password_hash);
 
                 $model->created_at = date("Y-m-d H:i:s");
                 $file = UploadedFile::getInstance($model, 'anhdaidien');
@@ -299,8 +299,8 @@ class UserController extends Controller
 
             ];
         }else if($model->load($request->post())){
-            if($model->validate())
-                $model->setPassword($model->password_hash);
+//            if($model->validate())
+//                $model->setPassword($model->password_hash);
 
             $model->created_at = date("Y-m-d H:i:s");
             $file = UploadedFile::getInstance($model, 'anhdaidien');
