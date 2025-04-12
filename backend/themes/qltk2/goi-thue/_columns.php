@@ -63,7 +63,7 @@ return [
         'attribute'=>'don_gia',
         'headerOptions' => ['width' => '20%'],
         'value' => function($data) {
-            return number_format($data->don_gia,0,',','.');
+            return number_format($data->don_gia,0,',','.').'đ';
         },
         'filter' => Html::activeTextInput(
             $searchModel, 'don_gia',

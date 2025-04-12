@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'ten')->textInput(['maxlength' => true, 'placeholder' => 'Nhập tên gói thuê']) ?>
         <?= $form->field($model, 'ky_hieu')->textInput(['maxlength' => true, 'placeholder' => 'Nhập ký hiệu']) ?>
-        <?= $form->field($model, 'don_gia')->textInput(['placeholder' => 'Nhập đơn giá']) ?>
+        <?= $form->field($model, 'don_gia')->textInput(['type'=>'number','step'=>'1000','placeholder' => 'Nhập đơn giá']) ?>
 
         <?php if (!Yii::$app->request->isAjax) { ?>
             <div class="form-group">
