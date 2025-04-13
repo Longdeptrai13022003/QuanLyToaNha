@@ -35,6 +35,7 @@ class TrangThai extends \yii\db\ActiveRecord
             [['loai_trang_thai'], 'integer'],
             [['ghi_chu'], 'string'],
             [['ten'], 'string', 'max' => 100],
+            [['ten'], 'unique', 'targetAttribute' => ['ten', 'loai_trang_thai'], 'message' => 'Trạng thái với tên và loại này đã tồn tại.'],
         ];
     }
 

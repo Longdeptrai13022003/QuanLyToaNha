@@ -64,7 +64,7 @@ return [
         'label' => 'Ghi chú',
         'vAlign'=>'middle',
         'attribute'=>'ghi_chu',
-        'headerOptions' => ['width' => '20%'],
+        'headerOptions' => ['width' => '30%'],
         'filter' => Html::activeTextInput(
             $searchModel, 'ghi_chu',
             [
@@ -77,6 +77,7 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
+        'headerOptions' => ['width' => 'auto'],
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
