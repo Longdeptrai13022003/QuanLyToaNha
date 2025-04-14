@@ -9,6 +9,7 @@ use backend\models\DanhMuc;
 use backend\models\FileHopDong;
 use backend\models\GiaDien;
 use backend\models\GiaoDich;
+use backend\models\GoiThue;
 use backend\models\HoaDon;
 use backend\models\NguoiOCung;
 use backend\models\QuanLyKhachHang;
@@ -130,6 +131,10 @@ class PhongKhachController extends Controller
             'ngay' => 'Gói ngày',
             'thang' => 'Gói tháng'
         ];
+//        $goiThue=GoiThue::find()->all();
+//        foreach ($goiThue as $goi){
+//            $packages[$goi->id] = $goi->ten;
+//        }
         $searchModelKhach = new QuanLyKhachHangSearch();
         $dataProviderKhach = $searchModelKhach->search(\Yii::$app->request->queryParams);
         $searchModelSale = new QuanLySaleSearch();

@@ -139,9 +139,12 @@ class HoaDonController extends Controller
             $dichVus[$thietLapGia->name] = $chiTietHoaDon->thanh_tien;
         }
         $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
-        $anhDien = ChiTietHoaDon::find()
-            ->andFilterWhere(['hoa_don_id'=>$id])
-            ->andFilterWhere(['dich_vu_id'=>2])->one()->anh;
+        $chiTietDien = ChiTietHoaDon::find()
+            ->andFilterWhere(['hoa_don_id' => $id])
+            ->andFilterWhere(['dich_vu_id' => 2])
+            ->one();
+
+        $anhDien = $chiTietDien ? $chiTietDien->anh : 'no-image.jpg';
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'title'=> "Hóa đơn khách ".$khach->hoten,

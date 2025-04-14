@@ -74,21 +74,27 @@ return [
         )
     ],
     [
-        'class' => 'kartik\grid\ActionColumn',
-        'dropdown' => false,
-        'vAlign'=>'middle',
-        'headerOptions' => ['width' => 'auto'],
-        'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to([$action,'id'=>$key]);
+        'header' => 'Sửa',
+        'value' => function($data) {
+            return \yii\bootstrap\Html::a('<i class="fa fa-edit"></i>',Url::toRoute(['trang-thai/update', 'id' => $data->id]), ['role' => 'modal-remote', 'data-toggle' => 'tooltip','id'=>'select2']);
         },
-        'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'], 
+        'format' => 'raw',
+        'headerOptions' => ['width' => '1%', 'class' => 'text-center'],
+        'contentOptions' => ['class' => 'text-center']
     ],
-
+    [
+        'header' => 'Xóa',
+        'headerOptions' => ['class' => 'text-center', 'width' => '1%'],
+        'contentOptions' => ['class' => 'text-center'],
+        'value' => function($data){
+            return \yii\bootstrap\Html::a('<i class="fa fa-trash"></i>', '#', ['role'=>'modal-remote','title'=>'Delete',
+                'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                'data-request-method'=>'post',
+                'data-toggle'=>'tooltip',
+                'data-confirm-title'=>'Are you sure?',
+                'data-confirm-message'=>'Are you sure want to delete this item',
+                'class'=>'text-danger']);
+        },
+        'format' => 'raw'
+    ]
 ];   
