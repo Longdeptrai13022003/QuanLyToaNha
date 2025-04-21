@@ -6,74 +6,154 @@ use yii\helpers\Html;
 use common\models\myAPI;
 ?>
 <ul class="page-sidebar-menu" data-slide-speed="200" data-auto-scroll="true">
-    <?php if(myAPI::isAccess2('DanhMuc', 'Index')
-    || myAPI::isAccess2('DiemTrinhDo', 'Index')): ?>
-    <li>
-        <a href="javascript:;"><i class="fa fa-bars"></i> Danh mục <span class="arrow"></span></a>
-        <ul class="sub-menu">
-            <?php if(myAPI::isAccess2('DanhMuc', 'Index')): ?>
-            <li>
-                <?=Html::a('Danh mục', \yii\helpers\Url::to(['danh-muc/index']))?>
-            </li>
-            <?php endif; ?>
-            <?php if(myAPI::isAccess2('DiemTrinhDo', 'Index')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-bars"></i> Thang điểm trình độ', \yii\helpers\Url::to(['diem-trinh-do/index']))?>
-            </li>
-            <?php endif; ?>
-        </ul>
-    </li>
-    <?php endif; ?>
-
-    <?php if(myAPI::isAccess2('PhongBan', 'Index')): ?>
+    <?php if(myAPI::isAccess2('User', 'Khach-hang')): ?>
         <li>
-            <?=Html::a('<i class="fa fa-home"></i> Phòng ban', \yii\helpers\Url::to(['phong-ban/index']))?>
-        </li>
-    <?php endif; ?>
-    <?php if(myAPI::isAccess2('User', 'Index')): ?>
-        <li>
-            <?=Html::a('<i class="fa fa-users"></i> Nhân sự', \yii\helpers\Url::to(['user/index']))?>
+            <?=Html::a('<i class="fa fa-users"></i> Khách hàng', \yii\helpers\Url::to(['user/khach-hang']))?>
         </li>
     <?php endif; ?>
 
-
-    <?php if(myAPI::isAccess2('TaiLieu', 'Huong-dan-su-dung')
-    || myAPI::isAccess2('Cauhinh', 'Index')
-    || myAPI::isAccess2('VaiTro', 'Index')
-    || myAPI::isAccess2('ChucNang', 'Index')
-    || myAPI::isAccess2('PhanQuyen', 'Index')): ?>
-    <li>
-        <a href="javascript:;">
-            <i class="fa fa-bar-chart-o"></i> Hệ thống
-            <span class="arrow"></span>
-        </a>
-        <ul class="sub-menu">
-            <?php if(myAPI::isAccess2('TaiLieu', 'Huong-dan-su-dung')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-file-pdf-o"></i> Hướng dẫn sử dụng', \yii\helpers\Url::toRoute(['tai-lieu/huong-dan-su-dung']))?>
-            </li>
-            <?php endif; ?>
-            <?php if(myAPI::isAccess2('CauHinh', 'Index')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-cogs"></i> Cấu hình', Yii::$app->urlManager->createUrl(['cauhinh']))?>
-            </li>
-            <?php endif; ?>
-            <?php if(myAPI::isAccess2('VaiTro', 'Index')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-users"></i> Vai trò', Yii::$app->urlManager->createUrl(['vai-tro']))?>
-            </li>
-            <?php endif; ?>
-            <?php if(myAPI::isAccess2('ChucNang', 'Index')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-bars"></i> Chức năng', Yii::$app->urlManager->createUrl(['chuc-nang']))?>
-            </li>
-            <?php endif; ?>
-            <?php if(myAPI::isAccess2('PhanQuyen', 'Index')): ?>
-            <li>
-                <?=Html::a('<i class="fa fa-users"></i> Phân quyền', Yii::$app->urlManager->createUrl(['phan-quyen']))?>
-            </li>
-            <?php endif; ?>
-        </ul>
-    </li>
+    <?php if(myAPI::isAccess2('PhongKhach', 'index')): ?>
+        <li class="classic-menu-dropdown">
+            <a data-toggle="dropdown" href="javascript:;" data-hover="megamenu-dropdown" data-close-others="true">
+                <i class="fa fa-sticky-note-o"></i> Hợp đồng <i class="fa fa-angle-down"></i></a>
+            <ul class="dropdown-menu pull-left">
+                <?php if(myAPI::isAccess2('PhongKhach', 'create')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-plus"></i> Thêm hợp đồng', \yii\helpers\Url::toRoute('phong-khach/create'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('PhongKhach', 'index')): ?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-list"></i> Danh sách', \yii\helpers\Url::to(['phong-khach/index']))?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </li>
     <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('GiaoDich', 'Index')): ?>
+        <li>
+            <?=Html::a('<i class="fa fa-money"></i> Giao dịch', \yii\helpers\Url::to(['giao-dich/index']))?>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('HoaDon', 'Index')): ?>
+        <li class="classic-menu-dropdown">
+            <a data-toggle="dropdown" href="javascript:;" data-hover="megamenu-dropdown" data-close-others="true">
+                <i class="fa fa-file-text"></i> Hóa đơn <i class="fa fa-angle-down"></i></a>
+            <ul class="dropdown-menu pull-left">
+                <?php if(myAPI::isAccess2('HoaDon', 'create')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-plus"></i> Lập hóa đơn', \yii\helpers\Url::toRoute('hoa-don/create'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('HoaDon', 'index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-list"></i> Danh sách hóa đơn', \yii\helpers\Url::toRoute('hoa-don/index'))?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('User','index')): ?>
+        <li>
+            <?=Html::a('<i class="fa fa-users"></i> Người dùng', \yii\helpers\Url::to(['user/index']))?>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('DanhMuc','view')): ?>
+        <li>
+            <?=Html::a('<i class="fa fa-dollar"></i> Chi phí', \yii\helpers\Url::to(['danh-muc/view']))?>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('DanhMuc','chi-phi')): ?>
+        <li class="classic-menu-dropdown">
+            <a data-toggle="dropdown" href="javascript:;" data-hover="megamenu-dropdown" data-close-others="true">
+                <i class="fa fa-dollar"></i> Quản lý chi <i class="fa fa-angle-down"></i></a>
+            <ul class="dropdown-menu pull-left">
+                <?php if(myAPI::isAccess2('DanhMuc','view')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-dollar"></i> Chi phí', \yii\helpers\Url::to(['danh-muc/chi-phi']))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('DanhMuc','moi-gioi')): ?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-user-plus"></i> Môi giới', \yii\helpers\Url::to(['danh-muc/moi-gioi']))?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('DanhMuc', 'thong-ke-phong')): ?>
+        <li class="classic-menu-dropdown">
+            <a data-toggle="dropdown" href="javascript:;" data-hover="megamenu-dropdown" data-close-others="true">
+                <i class="fa fa-line-chart"></i> Thống kê <i class="fa fa-angle-down"></i></a>
+            <ul class="dropdown-menu pull-left">
+                <?php if(myAPI::isAccess2('PhongKhach', 'create')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-home"></i> Báo cáo BĐS', \yii\helpers\Url::toRoute('danh-muc/thong-ke-phong'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('PhongKhach', 'index')): ?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-money"></i> Công nợ', \yii\helpers\Url::to(['hoa-don/cong-no']))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('DanhMuc', 'tong-hop')): ?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-money"></i> Lợi nhuận', \yii\helpers\Url::to(['danh-muc/tong-hop']))?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('Cauhinh', 'Index') || myAPI::isAccess2('ThietLapGia', 'index')): ?>
+        <li class="classic-menu-dropdown">
+            <a data-toggle="dropdown" href="javascript:;" data-hover="megamenu-dropdown" data-close-others="true">
+                <i class="fa fa-cog"></i> Hệ thống <i class="fa fa-angle-down"></i></a>
+            <ul class="dropdown-menu pull-left">
+                <?php if(myAPI::isAccess2('CauHinh', 'Index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-cog"></i> Cấu hình', Yii::$app->urlManager->createUrl(['cauhinh']))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('DanhMuc', 'toa-nha-phong-o')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-cogs"></i> Toà nhà / Phòng ở', \yii\helpers\Url::toRoute('danh-muc/toa-nha-phong-o'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('GoiThue', 'index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-cogs"></i> Gói thuê', \yii\helpers\Url::toRoute('goi-thue/index'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('DichVu', 'index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-cogs"></i> Dịch vụ', \yii\helpers\Url::toRoute('dich-vu/index'))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('TrangThai', 'index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-cogs"></i> Trạng thái', \yii\helpers\Url::toRoute('trang-thai/index'))?>
+                    </li>
+                <?php endif; ?>
+
+                <?php if(myAPI::isAccess2('ChucNang', 'Index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-bars"></i> Chức năng', Yii::$app->urlManager->createUrl(['chuc-nang']))?>
+                    </li>
+                <?php endif; ?>
+                <?php if(myAPI::isAccess2('PhanQuyen', 'Index')):?>
+                    <li>
+                        <?=Html::a('<i class="fa fa-users"></i> Phân quyền', Yii::$app->urlManager->createUrl(['phan-quyen']))?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </li>
+    <?php endif; ?>
+
 </ul>
