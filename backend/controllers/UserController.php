@@ -528,14 +528,15 @@ class UserController extends Controller
                 $cccd2 = UploadedFile::getInstanceByName('anhcancuoc2');
 
                 $name = explode(',',$oldUser->anhcancuoc);
-                while (count($name) < 2) {
-                    $name[] = 'no-image.jpg';
-                }
                 $name1 = $name[0];
                 $name2 = $name[1];
 
 
                 if($model->save()){
+                    $path = '';
+                    $pathcccd1 = '';
+                    $pathcccd2 = '';
+
                     if (!is_null($file)){
                         $anhdaidien = myAPI::createCode(time().$file->name);
                         $path = dirname(dirname(__DIR__)).'/hinh-anh/'.$anhdaidien;

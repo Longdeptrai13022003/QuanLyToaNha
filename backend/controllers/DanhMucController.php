@@ -839,8 +839,9 @@ class DanhMucController extends Controller
     public function actionGetChartData()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $timeIndex = strtotime('2024-01-01');
+        $timeIndex = strtotime('2024-09-01');
         $timeNow = strtotime('now');
+        $chartDatas = [];
 
         $dataThu = [];
         $dataChi = [];
@@ -875,6 +876,12 @@ class DanhMucController extends Controller
                 'date' => $timeIndex * 1000,
                 'value' => $tongThu - $tongChi
             ];
+            $chartDatas[] = [
+                'year' => date('m/Y', $timeIndex),
+                'tong_thu' => intval($tongThu),
+                'tong_chi' => $tongChi,
+                'loi_nhuan' => $tongThu - $tongChi,
+            ];
             $timeIndex = strtotime("+1 month", $timeIndex);
         }
 
@@ -883,6 +890,7 @@ class DanhMucController extends Controller
             'dataThu' => $dataThu,
             'dataChi' => $dataChi,
             'dataLoiNhuan' => $dataLoiNhuan,
+            'chartDatas' => $chartDatas,
             'tongThu' => number_format($tongThu,0,',','.'),
             'tongChi' => number_format($tongChi,0,',','.'),
             'loiNhuan' => number_format($tongThu - $tongChi,0,',','.'),

@@ -16,7 +16,6 @@ use Yii;
  * @property float|null $don_gia
  * @property int|null $so_luong
  * @property string|null $don_vi_tinh
- * @property string|null $anh
  * @property float|null $thanh_tien
  * @property int|null $chi_so_cu
  *
@@ -41,7 +40,7 @@ class ChiTietHoaDon extends \yii\db\ActiveRecord
     {
         return [
             [['hoa_don_id', 'user_id', 'dich_vu_id', 'chi_so_cu', 'so_luong'], 'integer'],
-            [['created','anh'], 'safe'],
+            [['created'], 'safe'],
             [['don_gia', 'thanh_tien'], 'number'],
             [['don_vi_tinh'], 'string', 'max' => 20],
             [['hoa_don_id'], 'exist', 'skipOnError' => true, 'targetClass' => HoaDon::className(), 'targetAttribute' => ['hoa_don_id' => 'id']],

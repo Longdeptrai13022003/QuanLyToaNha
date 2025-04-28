@@ -11,7 +11,6 @@ use Yii;
  * @property int|null $chi_phi_id
  * @property int|null $phieu_chi_id
  * @property float|null $so_tien
- * @property float|null $da_thanh_toan
  * @property string|null $ghi_chu
  * @property string|null $ten_chi_phi
  *
@@ -35,7 +34,7 @@ class ChiTietChiPhi extends \yii\db\ActiveRecord
     {
         return [
             [['chi_phi_id', 'phieu_chi_id'], 'integer'],
-            [['so_tien','da_thanh_toan'], 'number'],
+            [['so_tien'], 'number'],
             [['ghi_chu', 'ten_chi_phi'], 'string', 'max' => 100],
             [['chi_phi_id'], 'exist', 'skipOnError' => true, 'targetClass' => ChiPhi::className(), 'targetAttribute' => ['chi_phi_id' => 'id']],
             [['phieu_chi_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhieuChi::className(), 'targetAttribute' => ['phieu_chi_id' => 'id']],

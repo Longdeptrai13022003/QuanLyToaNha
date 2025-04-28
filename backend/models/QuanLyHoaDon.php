@@ -26,7 +26,6 @@ use Yii;
  * @property string|null $ma_hoa_don
  * @property string|null $ten_phong
  * @property string|null $ten_toa_nha
- * @property string|null $loai_hop_dong
  * @property string|null $hoten
  * @property string|null $dien_thoai
  * @property string|null $nguoi_thuc_hien
@@ -52,7 +51,7 @@ class QuanLyHoaDon extends \yii\db\ActiveRecord
         return [
             [['id', 'phong_khach_id', 'active', 'chot_hoa_don', 'thang', 'user_id', 'nam'], 'integer'],
             [['chi_phi_dich_vu', 'da_thanh_toan', 'tien_phong', 'tong_tien', 'thanh_tien'], 'number'],
-            [['created','parent_id','phong_id','khach_hang_id','so_nguoi','loai_hop_dong'], 'safe'],
+            [['created','parent_id','phong_id','khach_hang_id','so_nguoi'], 'safe'],
             [['trang_thai','ma_hoa_don','ten_phong','ten_toa_nha','ma_hop_dong','hoten','dien_thoai','nguoi_thuc_hien'], 'string'],
         ];
     }

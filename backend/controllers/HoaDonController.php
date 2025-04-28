@@ -139,12 +139,9 @@ class HoaDonController extends Controller
             $dichVus[$thietLapGia->name] = $chiTietHoaDon->thanh_tien;
         }
         $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
-        $chiTietDien = ChiTietHoaDon::find()
-            ->andFilterWhere(['hoa_don_id' => $id])
-            ->andFilterWhere(['dich_vu_id' => 2])
-            ->one();
-
-        $anhDien = $chiTietDien ? $chiTietDien->anh : 'no-image.jpg';
+        $anhDien = ChiTietHoaDon::find()
+            ->andFilterWhere(['hoa_don_id'=>$id])
+            ->andFilterWhere(['dich_vu_id'=>2])->one()->anh;
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'title'=> "Hóa đơn khách ".$khach->hoten,
@@ -272,7 +269,8 @@ class HoaDonController extends Controller
         $model->updateAttributes([
             'chi_phi_dich_vu' => 0,
             'tong_tien' => $model->tien_phong,
-            'chot_hoa_don' => 0
+            'chot_hoa_don' => 0,
+            'active' => 0,
         ]);
         $hopDong = PhongKhach::findOne($model->phong_khach_id);
         $daThanhToan = $hopDong->da_thanh_toan;
@@ -284,49 +282,14 @@ class HoaDonController extends Controller
         $giaoDichs = GiaoDich::findAll(['hoa_don_id'=>$model->id]);
         if (count($giaoDichs)>0){
             foreach ($giaoDichs as $giaoDich) {
-                $daThanhToan -= $giaoDich->so_tien_giao_dich;
                 $giaoDich->updateAttributes([
                     'trang_thai_giao_dich' => GiaoDich::KHONG_THANH_CONG,
                     'active' => 0
                 ]);
-                $giaoDich->afterUpdate();
-                $model->updateAttributes([
-                    'da_thanh_toan' => $model->da_thanh_toan-$giaoDich->so_tien_giao_dich,
-                ]);
-            }
-        }
-        if ($model->da_thanh_toan < $model->tong_tien){
-            $model->updateAttributes([
-                'trang_thai' => HoaDon::CHUA_THANH_TOAN
-            ]);
-            $model->afterUpdate();
-        }else{
-            $model->updateAttributes([
-                'trang_thai' => HoaDon::DA_THANH_TOAN
-            ]);
-            $model->afterUpdate();
-            $tienThua = $model->da_thanh_toan - $model->tong_tien;
-            $HDs = HoaDon::findAll(['phong_khach_id'=>$hopDong->id]);
-            foreach ($HDs as $HD){
-                if ($tienThua == 0)
-                    break;
-                $chenhLech = $HD->tong_tien-$HD->da_thanh_toan;
-                if ($tienThua >= $chenhLech){
-                    $HD->updateAttributes([
-                        'da_thanh_toan' => $HD->tong_tien,
-                        'trang_thai' => HoaDon::DA_THANH_TOAN
-                    ]);
-                    $HD->afterUpdate();
-                }else{
-                    $HD->updateAttributes([
-                        'da_thanh_toan' => $HD->da_thanh_toan+$tienThua
-                    ]);
-                }
-                $tienThua-=$chenhLech;
             }
         }
         $hopDong->updateAttributes([
-            'da_thanh_toan' => $daThanhToan
+            'da_thanh_toan' => $daThanhToan - $model->da_thanh_toan
         ]);
         return [
             'success' => true,

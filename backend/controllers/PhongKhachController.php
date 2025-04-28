@@ -9,7 +9,6 @@ use backend\models\DanhMuc;
 use backend\models\FileHopDong;
 use backend\models\GiaDien;
 use backend\models\GiaoDich;
-use backend\models\GoiThue;
 use backend\models\HoaDon;
 use backend\models\NguoiOCung;
 use backend\models\QuanLyKhachHang;
@@ -131,10 +130,6 @@ class PhongKhachController extends Controller
             'ngay' => 'Gói ngày',
             'thang' => 'Gói tháng'
         ];
-//        $goiThue=GoiThue::find()->all();
-//        foreach ($goiThue as $goi){
-//            $packages[$goi->id] = $goi->ten;
-//        }
         $searchModelKhach = new QuanLyKhachHangSearch();
         $dataProviderKhach = $searchModelKhach->search(\Yii::$app->request->queryParams);
         $searchModelSale = new QuanLySaleSearch();
@@ -186,19 +181,21 @@ class PhongKhachController extends Controller
     {
         $bill = new HoaDon();
         $startDate = 1;
-        $endDate = (int)date("t");
+        $endDate = (int)date("t",$timeIndex);
         $thangBatDau = (int)date('m', strtotime($model->thoi_gian_hop_dong_tu));
+        $namBatDau = (int)date('Y', strtotime($model->thoi_gian_hop_dong_tu));
         $ngayBatDau = (int)date('d', strtotime($model->thoi_gian_hop_dong_tu));
         $thangKetThuc = (int)date('m', strtotime($model->thoi_gian_hop_dong_den));
+        $namKetThuc = (int)date('Y', strtotime($model->thoi_gian_hop_dong_den));
         $ngayKetThuc = (int)date('d', strtotime($model->thoi_gian_hop_dong_den));
-        $soNgay = (int)date("t");
+        $soNgay = (int)date("t",$timeIndex);
 
         $thang = (int)date('m',$timeIndex);
         $nam = (int)date('Y',$timeIndex);
-        if($thang == $thangBatDau){
+        if($thang == $thangBatDau && $nam == $namBatDau){
             $startDate = $ngayBatDau;
         }
-        if($thang == $thangKetThuc){
+        if($thang == $thangKetThuc && $nam == $namKetThuc){
             $endDate = $ngayKetThuc;
         }
 
@@ -211,10 +208,9 @@ class PhongKhachController extends Controller
         }elseif ($model->loai_hop_dong == 'thang'){
             //Trường hợp tháng thiếu ngày
             $diff = $endDate - $startDate + 1;
-            $giaPhong = round($model->don_gia/$soNgay)*$diff;
-            //Nếu không ở đủ tháng thì không trừ chiết khấu
-            $chietKhau = $diff == $soNgay ? $model->so_tien_chiet_khau : 0;
-            $bill->tien_phong = $giaPhong - $chietKhau;
+            $giaPhong = (int)round(((float)$bill->tien_phong/(float)$soNgay)*(float)$diff);
+            
+            $bill->tien_phong = $giaPhong;
         }
         $bill->chi_phi_dich_vu = 0;
         $bill->da_thanh_toan = 0;
@@ -384,7 +380,7 @@ class PhongKhachController extends Controller
         $model->da_thanh_toan_moi_gioi = str_replace('.','',$model->da_thanh_toan_moi_gioi);
         if ($model->moi_gioi != ''){
             if($model->kieu_moi_gioi == '%'){
-                $model->so_tien_moi_gioi = $model->moi_gioi * $model->don_gia / 100;
+                $model->so_tien_moi_gioi = $model->moi_gioi * ($model->don_gia - $model->so_tien_chiet_khau) / 100;
             }else{
                 $model->so_tien_moi_gioi = $model->moi_gioi;
             }
@@ -677,7 +673,7 @@ class PhongKhachController extends Controller
         $model->da_thanh_toan_moi_gioi = str_replace('.','',$model->da_thanh_toan_moi_gioi);
         if ($model->moi_gioi != ''){
             if($model->kieu_moi_gioi == '%'){
-                $model->so_tien_moi_gioi = $model->moi_gioi * $model->don_gia / 100;
+                $model->so_tien_moi_gioi = $model->moi_gioi * ($model->don_gia - $model->so_tien_chiet_khau) / 100;
             }else{
                 $model->so_tien_moi_gioi = $model->moi_gioi;
             }
