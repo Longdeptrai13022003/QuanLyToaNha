@@ -133,38 +133,44 @@ use yii\jui\DatePicker;
 
                 <div class="col-md-6">
                     <br/>
-                    <table class="table text-nowrap">
-                        <tr>
-                            <td>Môi giới: <span class="text-danger">*</span></td>
-                            <td><?= Html::activeTextInput($model,'moi_gioi',[
-                                    'class'=>'form-control text-right hien_thi_tien',
-                                    'value' => number_format($model->moi_gioi, 0, ',', '.')
-                                ]) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Kiểu môi giới: <span class="text-danger">*</span></td>
-                            <td id="kieu_moi_gioi" class="text-right">
-                                <?= Html::activeDropDownList($model,'kieu_moi_gioi',[
-                                    '%'=>'%',
-                                    'số tiền'=>'Số tiền'
-                                ],['class'=>'form-control']) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Số tiền môi giới: </td>
-                            <td id="so_tien_moi_gioi" class="text-right">
-                                <?= $model->isNewRecord ? '' : number_format($model->so_tien_moi_gioi, 0, '', '.')?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Đã thanh toán MG: </td>
-                            <td id="tien-moi-gioi" class="text-right">
-                                <?=Html::activeTextInput($model,'da_thanh_toan_moi_gioi',[
-                                    'class'=>'form-control text-right hien_thi_tien',
-                                    'value' => number_format($model->da_thanh_toan_moi_gioi, 0, ',', '.')
-                                ])?>
-                            </td>
-                        </tr>
-                    </table>
+                    <button type="button" class="btn btn-primary" id="toggle-moi-gioi">
+                        Thêm thông tin môi giới
+                    </button>
+
+                    <div id="block-moi-gioi" style="display: none;">
+                        <table class="table text-nowrap">
+                            <tr>
+                                <td>Môi giới: <span class="text-danger">*</span></td>
+                                <td><?= Html::activeTextInput($model,'moi_gioi',[
+                                        'class'=>'form-control text-right hien_thi_tien',
+                                        'value' => number_format($model->moi_gioi, 0, ',', '.')
+                                    ]) ?></td>
+                            </tr>
+                            <tr>
+                                <td>Kiểu môi giới: <span class="text-danger">*</span></td>
+                                <td id="kieu_moi_gioi" class="text-right">
+                                    <?= Html::activeDropDownList($model,'kieu_moi_gioi',[
+                                        '%'=>'%',
+                                        'số tiền'=>'Số tiền'
+                                    ],['class'=>'form-control']) ?></td>
+                            </tr>
+                            <tr>
+                                <td>Số tiền môi giới: </td>
+                                <td id="so_tien_moi_gioi" class="text-right">
+                                    <?= $model->isNewRecord ? '' : number_format($model->so_tien_moi_gioi, 0, '', '.')?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đã thanh toán MG: </td>
+                                <td id="tien-moi-gioi" class="text-right">
+                                    <?=Html::activeTextInput($model,'da_thanh_toan_moi_gioi',[
+                                        'class'=>'form-control text-right hien_thi_tien',
+                                        'value' => number_format($model->da_thanh_toan_moi_gioi, 0, ',', '.')
+                                    ])?>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id="block-thong-tin">

@@ -825,4 +825,10 @@ $(document).ready(function () {
             });
         }
     });
+
+    $(document).on('click','#toggle-moi-gioi',function (e){
+        $('#block-moi-gioi').toggle();
+        var text = ($('#block-moi-gioi').is(':visible')) ? 'Ẩn thông tin môi giới' : 'Thêm thông tin môi giới';
+        $('#toggle-moi-gioi').text(text);
+    });
 });
