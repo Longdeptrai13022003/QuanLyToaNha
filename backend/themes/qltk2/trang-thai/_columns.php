@@ -73,28 +73,58 @@ return [
             ]
         )
     ],
+//    [
+//        'header' => 'Sửa',
+//        'value' => function($data) {
+//            return \yii\bootstrap\Html::a('<i class="fa fa-edit"></i>',Url::toRoute(['trang-thai/update', 'id' => $data->id]), ['role' => 'modal-remote', 'data-toggle' => 'tooltip','id'=>'select2']);
+//        },
+//        'format' => 'raw',
+//        'headerOptions' => ['width' => '10%', 'class' => 'text-center'],
+//        'contentOptions' => ['class' => 'text-center']
+//    ],
+//    [
+//        'class' => 'kartik\grid\ActionColumn',
+//        'header' =>'Xoá',
+//        'dropdown' => false,
+//        'vAlign'=>'middle',
+//        'template' => '{delete}',
+//        'headerOptions' => ['width' => 'auto'],
+//        'urlCreator' => function($action, $model, $key, $index) {
+//            return Url::to([$action,'id'=>$key]);
+//        },
+//        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',
+//            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+//            'data-request-method'=>'post',
+//            'data-toggle'=>'tooltip',
+//            'data-confirm-title'=>'Are you sure?',
+//            'data-confirm-message'=>'Are you sure want to delete this item'],
+//    ],
     [
-        'header' => 'Sửa',
-        'value' => function($data) {
-            return \yii\bootstrap\Html::a('<i class="fa fa-edit"></i>',Url::toRoute(['trang-thai/update', 'id' => $data->id]), ['role' => 'modal-remote', 'data-toggle' => 'tooltip','id'=>'select2']);
-        },
+        'header' => 'Thao tác',
         'format' => 'raw',
-        'headerOptions' => ['width' => '1%', 'class' => 'text-center'],
-        'contentOptions' => ['class' => 'text-center']
-    ],
-    [
-        'header' => 'Xóa',
-        'headerOptions' => ['class' => 'text-center', 'width' => '1%'],
+        'headerOptions' => ['width' => '15%', 'class' => 'text-center'],
         'contentOptions' => ['class' => 'text-center'],
-        'value' => function($data){
-            return \yii\bootstrap\Html::a('<i class="fa fa-trash"></i>', '#', ['role'=>'modal-remote','title'=>'Delete',
-                'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                'data-request-method'=>'post',
-                'data-toggle'=>'tooltip',
-                'data-confirm-title'=>'Are you sure?',
-                'data-confirm-message'=>'Are you sure want to delete this item',
-                'class'=>'text-danger']);
+        'value' => function($data) {
+            $update = \yii\bootstrap\Html::a('<i class="fa fa-edit"></i>',
+                Url::toRoute(['trang-thai/update', 'id' => $data->id]),
+                ['role' => 'modal-remote', 'data-toggle' => 'tooltip', 'title' => 'Sửa', 'class'=>'btn btn-sm btn-primary']);
+
+            $delete = \yii\bootstrap\Html::a('<i class="fa fa-trash"></i>',
+                Url::toRoute(['trang-thai/delete', 'id' => $data->id]),
+                [
+                    'role' => 'modal-remote',
+                    'title' => 'Xóa',
+                    'data-confirm' => false,
+                    'data-method' => false,
+                    'data-request-method' => 'post',
+                    'data-toggle' => 'tooltip',
+                    'data-confirm-title' => 'Bạn chắc chứ?',
+                    'data-confirm-message' => 'Bạn có chắc chắn muốn xóa trạng thái "'.$data->ten.'" không?',
+                    'class' => 'btn btn-sm btn-danger',
+                ]);
+
+            return $update . ' ' . $delete;
         },
-        'format' => 'raw'
-    ]
+    ],
+
 ];   
