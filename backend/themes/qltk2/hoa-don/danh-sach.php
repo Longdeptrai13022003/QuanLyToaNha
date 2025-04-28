@@ -22,7 +22,7 @@ $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
         <th width="1%">Rác</th>
         <th width="1%">Internet</th>
         <th width="1%">Giặt</th>
-        <th>Phụ phí</th>
+        <th width="10%">Phụ phí</th>
         <th width="1%">Tổng tiền</th>
         <th width="1%">Đã TT</th>
         <th width="1%">Trạng thái</th>

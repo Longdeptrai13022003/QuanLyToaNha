@@ -191,7 +191,8 @@ class SiteController extends Controller
     }
     public function actionUpdateProfile(){
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $ngaySinh = (new \DateTime($_POST['ngaySinh']))->format('Y-m-d');
+//        $ngaySinh = (new \DateTime($_POST['ngaySinh']))->format('Y-m-d');
+        $ngaySinh = \DateTime::createFromFormat('d/m/Y', $_POST['ngaySinh'])->format('Y-m-d');
         $user = User::findOne(Yii::$app->user->id);
         $user->updateAttributes([
             'hoten' => $_POST['hoTen'],

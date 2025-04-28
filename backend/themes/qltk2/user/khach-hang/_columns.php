@@ -12,7 +12,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Ảnh đại diện',
         'attribute'=>'anhdaidien',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '10%'],
         'value' => function ($model) {
             $imageWebPath = Yii::getAlias('@web/hinh-anh/') . $model->anhdaidien;
             $imageFilePath = Yii::getAlias('@webroot/hinh-anh/') . $model->anhdaidien;
@@ -46,7 +46,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Số CCCD',
         'attribute'=>'so_cccd',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '10%'],
         'filter' => \yii\helpers\Html::activeTextInput(
             $searchModel, 'so_cccd', [
                 'class' => 'form-control',
@@ -58,7 +58,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Điện thoại',
         'attribute'=>'dien_thoai',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '10%'],
         'filter' => \yii\helpers\Html::activeTextInput(
             $searchModel, 'dien_thoai', [
                 'class' => 'form-control',
@@ -81,7 +81,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Email',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '10%'],
         'attribute'=>'email',
         'filter' => \yii\helpers\Html::activeTextInput(
             $searchModel, 'email', [

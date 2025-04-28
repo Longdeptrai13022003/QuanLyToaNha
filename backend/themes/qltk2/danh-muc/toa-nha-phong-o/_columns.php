@@ -16,7 +16,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'type',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '20%'],
         'filter' => \yii\helpers\Html::activeDropDownList(
             $searchModel, 'type',
             [
@@ -29,7 +29,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'active',
-        'headerOptions' => ['width' => '1%'],
+        'headerOptions' => ['width' => '20%'],
         'label' => 'Toà nhà',
         'value' => function($data){
     /** @var \backend\models\DanhMuc $data */
@@ -43,7 +43,7 @@ return [
             return number_format($data->don_gia, 0, '', '.');
         },
         'contentOptions' => ['class' => 'text-right'],
-        'headerOptions' => ['width' => '1%']
+        'headerOptions' => ['width' => '10%']
     ],
     [
         'value' => function($data){
