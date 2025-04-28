@@ -299,6 +299,11 @@ class UserController extends Controller
 
             ];
         }else if($model->load($request->post())){
+            $model->username = 'user_' . time();
+            $model->password_hash = uniqid('', true);
+            if (mb_strlen($model->password_hash) < 6) {
+                $model->password_hash = uniqid('', true) . '123';
+            }
 //            if($model->validate())
 //                $model->setPassword($model->password_hash);
 

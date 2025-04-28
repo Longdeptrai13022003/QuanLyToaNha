@@ -21,22 +21,22 @@ use common\models\User;
     ]); ?>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <?= $form->field($model, 'hoten')->label('Họ tên <span class="text-danger">*</span>')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <?= $form->field($model, 'dien_thoai')->label('Điện thoại <span class="text-danger">*</span>')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <?= $form->field($model, 'email')->label('Email')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 hidden">
             <?= $form->field($model, 'username')->label('Tên đăng nhập <span class="text-danger">*</span>')->textInput(['maxlength' => true, 'autocomplete' => 'false']) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 hidden">
             <?= $form->field($model, 'password_hash')->label('Mật khẩu <span class="text-danger">*</span>')->textInput(['maxlength' => true, 'type' => 'password', 'autocomplete' => 'new-password']) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <?= $form->field($model, 'so_cccd')->label('CCCD')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
