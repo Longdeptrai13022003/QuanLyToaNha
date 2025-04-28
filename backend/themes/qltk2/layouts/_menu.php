@@ -76,11 +76,11 @@ use yii\helpers\Html;
     </li>
     <?php endif; ?>
 
-    <?php if(myAPI::isAccess2('DanhMuc','view')): ?>
-    <li>
-        <?=Html::a('<i class="fa fa-dollar"></i> Chi phí', \yii\helpers\Url::to(['danh-muc/view']))?>
-    </li>
-    <?php endif; ?>
+<!--    --><?php //if(myAPI::isAccess2('DanhMuc','view')): ?>
+<!--    <li>-->
+<!--        --><?php //=Html::a('<i class="fa fa-dollar"></i> Chi phí', \yii\helpers\Url::to(['danh-muc/view']))?>
+<!--    </li>-->
+<!--    --><?php //endif; ?>
 
     <?php if(
         myAPI::isAccess2('DanhMuc','chi-phi')
