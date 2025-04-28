@@ -44,54 +44,54 @@ return [
                 ]
             )
     ],
-//    [
-//        'class'=>'\kartik\grid\DataColumn',
-//        'label' => 'Sale MG',
-//        'attribute'=>'sale_id',
-//        'headerOptions' => ['width' => '1%'],
-//        'value' => function ($data) {
-//            return $data->hoten_sale == null ? '' : $data->hoten_sale.'<br/><i class="fa fa-phone"></i> '.$data->dien_thoai_sale;
-//        },
-//        'format'=>'raw',
-//        'filter' => \yii\helpers\Html::activeTextInput(
-//            $searchModel, 'hoten_sale', [
-//                'class' => 'form-control',
-//                'placeholder' => 'Tên sale'
-//            ]
-//        ).\yii\helpers\Html::activeTextInput(
-//                $searchModel, 'dien_thoai_sale', [
-//                    'class' => 'form-control',
-//                    'placeholder' => 'Điện thoại sale'
-//                ]
-//            )
-//    ],
-//    [
-//        'class'=>'\kartik\grid\DataColumn',
-//        'label' => 'Phí MG',
-//        'attribute'=>'so_tien_moi_gioi',
-//        'headerOptions' => ['width' => '1%'],
-//        'value' => function ($data) {
-//            return '<span class="pull-right">'.number_format($data->so_tien_moi_gioi, 0, ',', '.').'</span>';
-//        },
-//        'format'=>'raw',
-//        'filter' => false
-//    ],
-//    [
-//        'class'=>'\kartik\grid\DataColumn',
-//        'label' => 'Đã TT MG',
-//        'attribute'=>'da_thanh_toan_moi_gioi',
-//        'headerOptions' => ['width' => '1%'],
-//        'value' => function ($data) {
-//            return '<span class="pull-right">'.number_format($data->da_thanh_toan_moi_gioi, 0, ',', '.').'</span>';
-//        },
-//        'format'=>'raw',
-//        'filter' => false
-//    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label' => 'Sale MG',
+        'attribute'=>'sale_id',
+        'headerOptions' => ['width' => '1%'],
+        'value' => function ($data) {
+            return $data->hoten_sale == null ? '' : $data->hoten_sale.'<br/><i class="fa fa-phone"></i> '.$data->dien_thoai_sale;
+        },
+        'format'=>'raw',
+        'filter' => \yii\helpers\Html::activeTextInput(
+            $searchModel, 'hoten_sale', [
+                'class' => 'form-control',
+                'placeholder' => 'Tên sale'
+            ]
+        ).\yii\helpers\Html::activeTextInput(
+                $searchModel, 'dien_thoai_sale', [
+                    'class' => 'form-control',
+                    'placeholder' => 'Điện thoại sale'
+                ]
+            )
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label' => 'Phí MG',
+        'attribute'=>'so_tien_moi_gioi',
+        'headerOptions' => ['width' => '1%'],
+        'value' => function ($data) {
+            return '<span class="pull-right">'.number_format($data->so_tien_moi_gioi, 0, ',', '.').'</span>';
+        },
+        'format'=>'raw',
+        'filter' => false
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label' => 'Đã TT MG',
+        'attribute'=>'da_thanh_toan_moi_gioi',
+        'headerOptions' => ['width' => '1%'],
+        'value' => function ($data) {
+            return '<span class="pull-right">'.number_format($data->da_thanh_toan_moi_gioi, 0, ',', '.').'</span>';
+        },
+        'format'=>'raw',
+        'filter' => false
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Phòng',
         'attribute'=>'phong_id',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'value' => function ($data) {
             return $data->ten_phong.'<br/>'.$data->ten_toa_nha;
         },
@@ -178,20 +178,20 @@ return [
         'format'=>'raw',
         'filter' => false
     ],
+//    [
+//        'class'=>'\kartik\grid\DataColumn',
+//        'label' => 'Thành tiền',
+//        'attribute'=>'thanh_tien',
+//        'headerOptions' => ['width' => '1%'],
+//        'value' => function ($data) {
+//            return '<span class="pull-right">'.number_format($data->thanh_tien, 0, ',', '.').'</span>';
+//        },
+//        'format'=>'raw',
+//        'filter' => false
+//    ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label' => 'Thành tiền',
-        'attribute'=>'thanh_tien',
-        'headerOptions' => ['width' => '1%'],
-        'value' => function ($data) {
-            return '<span class="pull-right">'.number_format($data->thanh_tien, 0, ',', '.').'</span>';
-        },
-        'format'=>'raw',
-        'filter' => false
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label' => 'Đã cọc',
+        'label' => 'Đã TT',
         'attribute'=>'thanh_tien',
         'headerOptions' => ['width' => '1%'],
         'value' => function ($data) {
@@ -205,17 +205,17 @@ return [
             ['class' => 'form-control', 'prompt' => 'Tất cả']
         ),
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label' => 'Còn lại',
-        'attribute'=>'coc_truoc',
-        'headerOptions' => ['width' => '1%'],
-        'value' => function ($data) {
-            return '<span class="pull-right">'.number_format($data->thanh_tien - $data->da_thanh_toan, 0, ',', '.').'</span>';
-        },
-        'format'=>'raw',
-        'filter' => false
-    ],
+//    [
+//        'class'=>'\kartik\grid\DataColumn',
+//        'label' => 'Còn lại',
+//        'attribute'=>'coc_truoc',
+//        'headerOptions' => ['width' => '1%'],
+//        'value' => function ($data) {
+//            return '<span class="pull-right">'.number_format($data->thanh_tien - $data->da_thanh_toan, 0, ',', '.').'</span>';
+//        },
+//        'format'=>'raw',
+//        'filter' => false
+//    ],
     [
         'header' => 'TT',
         'value' => function($data) {

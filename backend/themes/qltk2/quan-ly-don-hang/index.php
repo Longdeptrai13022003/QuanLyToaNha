@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel backend\models\search\QuanLyDonHangSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý toà nhà';
+$this->title = 'Quản lý đơn hàng';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);

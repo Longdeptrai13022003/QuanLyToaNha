@@ -14,7 +14,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Mã hóa đơn',
         'attribute'=>'ma_hoa_don',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'filter' => Html::activeTextInput(
             $searchModel, 'ma_hoa_don',
             [
@@ -27,7 +27,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Phòng',
         'attribute'=>'ten_phong',
-        'headerOptions' => ['width' => '15%'],
+        'headerOptions' => ['width' => '1%'],
         'value' => function ($data) {
             return $data->ten_phong.'/'.$data->ten_toa_nha;
         },
@@ -69,7 +69,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Người thực hiện',
         'attribute'=>'nguoi_thuc_hien',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'filter' => Html::activeTextInput(
             $searchModel,'nguoi_thuc_hien',[
                 'class'=>'form-control',
@@ -81,7 +81,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thang',
         'label' => 'Tháng',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'value' => function ($data) {
             return '<span class="pull-right">'.$data->thang.'</span>';
         },
@@ -92,13 +92,13 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nam',
         'label' => 'Năm',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
         'label' => 'Trạng thái',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'filter' => Html::activeDropDownList(
             $searchModel,
             'trang_thai',
@@ -112,7 +112,7 @@ return [
             return \yii\bootstrap\Html::a('<i class="fa fa-eye"></i>',Url::toRoute(['hoa-don/view', 'id' => $data->id]), ['role' => 'modal-remote', 'data-toggle' => 'tooltip','id'=>'select2']);
         },
         'format' => 'raw',
-        'headerOptions' => ['width' => '3%', 'class' => 'text-center'],
+        'headerOptions' => ['width' => '1%', 'class' => 'text-center'],
         'contentOptions' => ['class' => 'text-center']
     ],
     [
@@ -121,12 +121,12 @@ return [
             return \yii\bootstrap\Html::a('<i class="fa fa-print"></i>','#', ['class'=>'btn-print','data-value'=>$data->id,'loai-in'=>'mot']);
         },
         'format' => 'raw',
-        'headerOptions' => ['width' => '3%', 'class' => 'text-center'],
+        'headerOptions' => ['width' => '1%', 'class' => 'text-center'],
         'contentOptions' => ['class' => 'text-center']
     ],
     [
         'header' => 'Xóa',
-        'headerOptions' => ['class' => 'text-center', 'width' => '3%'],
+        'headerOptions' => ['class' => 'text-center', 'width' => '1%'],
         'contentOptions' => ['class' => 'text-center'],
         'value' => function($data){
             if($data->active == 1)

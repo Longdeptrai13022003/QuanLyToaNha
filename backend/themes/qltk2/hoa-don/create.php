@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-2">
-            <p><?=Html::label('Lọc theo Gói thuê','goi_thue',['class'=>'form-label'])?></p>
+            <p><?=Html::label('Gói thuê','goi_thue',['class'=>'form-label'])?></p>
             <?= Html::dropDownList('goi_thue','thang',[
                     '3_gio' => '3 giờ',
                     '6_gio' => '6 giờ',
@@ -50,11 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],['class'=>'form-control','id'=>'goi_thue'])?>
         </div>
         <div class="col-md-2">
-            <p><?=Html::label('Lọc theo Tháng','thang',['class'=>'form-label'])?></p>
+            <p><?=Html::label('Tháng','thang',['class'=>'form-label'])?></p>
             <?= Html::dropDownList('thang',date('n'),$thangs,['class'=>'form-control','id'=>'thang'])?>
         </div>
         <div class="col-md-2">
-            <p><?=Html::label('Lọc theo Năm','nam',['class'=>'form-label'])?></p>
+            <p><?=Html::label('Năm','nam',['class'=>'form-label'])?></p>
             <?= Html::dropDownList('nam',date('Y'),$nams,['class'=>'form-control','id'=>'nam'])?>
         </div>
         <div class="col-md-2">
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::dropDownList('toa_nha',null,$toanhaids,['class'=>'form-control','id'=>'toa_nha'])?>
         </div>
         <div class="col-md-2">
-            <p><?=Html::label('Đơn vị tính tiền nước','kieu_tien_nuoc',['class'=>'form-label'])?></p>
+            <p><?=Html::label('Tính tiền nước','kieu_tien_nuoc',['class'=>'form-label'])?></p>
             <?= Html::dropDownList('kieu_tien_nuoc', 'Theo số người', [
                     'so_nguoi' => 'Theo số người',
                     'so_khoi' => 'Theo số khối'

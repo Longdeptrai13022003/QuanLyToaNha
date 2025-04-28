@@ -55,5 +55,5 @@ $count = 1;
     </div>
 <?php ActiveForm::end(); ?>
 
-<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/backend/assets/js-view/danh-muc.js',[ 'depends' => ['backend\assets\Qltk2Asset'], 'position' => \yii\web\View::POS_END ]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl.'/backend/assets/js-view/thue-ngan-han.js',[ 'depends' => ['backend\assets\Qltk2Asset'], 'position' => \yii\web\View::POS_END ]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl.'/backend/assets/js-view/user.js',[ 'depends' => ['backend\assets\Qltk2Asset'], 'position' => \yii\web\View::POS_END ]); ?>

@@ -18,6 +18,17 @@ $toanhaids = ArrayHelper::map($toanhas, 'id', function($toanha) {
     return $toanha->name;
 });
 ?>
+<style>
+    .custom_margin{
+        margin-top: 36px;
+    }
+    .custom_mt{
+        margin-top: 13px;
+    }
+    .mt_danhsach{
+        margin-top: 8px;
+    }
+</style>
 <div>
 
     <?php $form = ActiveForm::begin([

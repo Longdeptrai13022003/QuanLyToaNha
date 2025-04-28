@@ -16,7 +16,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'type',
-        'headerOptions' => ['width' => '40%'],
+        'headerOptions' => ['width' => '1%'],
         'filter' => \yii\helpers\Html::activeDropDownList(
             $searchModel, 'type',
             [

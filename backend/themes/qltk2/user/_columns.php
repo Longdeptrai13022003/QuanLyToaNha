@@ -40,7 +40,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Điện thoại',
         'attribute'=>'dien_thoai',
-        'headerOptions' => ['width' => '20%'],
+        'headerOptions' => ['width' => '1%'],
         'filter' => \yii\helpers\Html::activeTextInput(
                 $searchModel, 'dien_thoai', [
                     'class' => 'form-control',
@@ -51,7 +51,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Tên đăng nhập',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%'],
         'attribute'=>'username',
         'filter' => \yii\helpers\Html::activeTextInput(
                 $searchModel, 'username', [
@@ -63,7 +63,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Email',
-        'headerOptions' => ['width' => '20%'],
+        'headerOptions' => ['width' => '1%'],
         'attribute'=>'email',
         'filter' => \yii\helpers\Html::activeTextInput(
                 $searchModel, 'email', [
