@@ -27,7 +27,7 @@ use common\models\User;
             <?= $form->field($model, 'dien_thoai')->label('Điện thoại <span class="text-danger">*</span>')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'email')->label('Email <span class="text-danger">*</span>')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'email')->label('Email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'username')->label('Tên đăng nhập <span class="text-danger">*</span>')->textInput(['maxlength' => true, 'autocomplete' => 'false', 'readonly'=>$model->isNewRecord ? false : true]) ?>
