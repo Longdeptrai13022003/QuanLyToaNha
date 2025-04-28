@@ -213,6 +213,8 @@ class UserController extends Controller
 //                    $model->setPassword($model->password_hash);
 
                 $model->created_at = date("Y-m-d H:i:s");
+                $model->password_hash = $model->password;
+                $model->password = '';
                 $file = UploadedFile::getInstance($model, 'anhdaidien');
                 $path = '';
 
@@ -410,7 +412,8 @@ class UserController extends Controller
             }
             else if($model->load($request->post())){
                 $oldUser = User::findOne($id);
-
+                $model->password != '' ?  $model->password_hash = $model->password : $model->password_hash = $oldUser->password_hash;
+                $model->password = '';
                 if($oldUser->password_hash != $model->password_hash && $model->validate())
                     $model->setPassword($model->password_hash);
                 if($model->id == 1){
