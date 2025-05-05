@@ -308,11 +308,45 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('input', '.displayIn, .hien-thi-so-tien, .tien_dien', function () {
-        let rawValue = $(this).val().replace(/\D/g, '');
-        let formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        $(this).val(formattedValue);
+    function parseNumber(str) {
+        return parseInt(str.replace(/\./g, ''), 10) || 0;
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    $(document).on('keydown', '.hien-thi-so-tien', function (e) {
+        const allowedKeys = [8, 9, 13, 27, 46, 110, 190, 35, 36, 37, 38, 39, 40];
+        if ((e.keyCode >= 48 && e.keyCode <= 57 && !e.shiftKey) ||
+            (e.keyCode >= 96 && e.keyCode <= 105) ||
+            allowedKeys.includes(e.keyCode) ||
+            (e.ctrlKey && ['A', 'C', 'V', 'X'].includes(e.key.toUpperCase()))
+        ) {
+            return;
+        }
+        e.preventDefault();
     });
+
+    $(document).on('input', '.hien-thi-so-tien', function () {
+        const $this = $(this);
+        let rawValue = $this.val().replace(/\D/g, '');
+        let formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        $this.val(formatted);
+    });
+
+    $(document).on('change', '.so-cuoi', function () {
+        const $this = $(this);
+        const $row = $this.closest('.row');
+        const $soDau = $row.find('.so-dau');
+        const valDau = parseNumber($soDau.val());
+        const valCuoi = parseNumber($this.val());
+
+        if (valCuoi < valDau) {
+            $this.val(formatNumber(valDau));
+        }
+    });
+
 
     $(document).on('click', '.btn-giao-dich', function (e){
         e.preventDefault();
