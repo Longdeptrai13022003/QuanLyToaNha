@@ -43,11 +43,6 @@ use yii\helpers\Html;
         </li>
     <?php endif; ?>
 
-    <?php if(myAPI::isAccess2('GiaoDich', 'Index')): ?>
-        <li>
-            <?=Html::a('<i class="fa fa-money"></i> Giao dịch', \yii\helpers\Url::to(['giao-dich/index']))?>
-        </li>
-    <?php endif; ?>
 
     <?php if(
         myAPI::isAccess2('HoaDon', 'Index')
@@ -67,6 +62,12 @@ use yii\helpers\Html;
                     </li>
                 <?php endif; ?>
             </ul>
+        </li>
+    <?php endif; ?>
+
+    <?php if(myAPI::isAccess2('GiaoDich', 'Index')): ?>
+        <li>
+            <?=Html::a('<i class="fa fa-money"></i> Giao dịch', \yii\helpers\Url::to(['giao-dich/index']))?>
         </li>
     <?php endif; ?>
 
