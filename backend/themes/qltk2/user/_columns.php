@@ -12,11 +12,12 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label' => 'Ảnh đại diện',
         'attribute'=>'anhdaidien',
-        'headerOptions' => ['width' => '10%'],
+        'headerOptions' => ['width' => '1%', 'class' => 'text-center'],
+        'contentOptions' => ['class' => 'text-center'],
         'value' => function ($model) {
             $imageWebPath = Yii::getAlias('@web/hinh-anh/') . $model->anhdaidien;
             $imageFilePath = Yii::getAlias('@webroot/hinh-anh/') . $model->anhdaidien;
-            return is_file($imageFilePath) ? \yii\helpers\Html::img($imageWebPath, ['width' => '150px', 'id' => 'hinh-anh', 'class' => 'img-thumbnail']) : '';
+            return is_file($imageFilePath) ? \yii\helpers\Html::img($imageWebPath, ['width' => '100px', 'id' => 'hinh-anh', 'class' => 'img-thumbnail']) : '';
         },
         'format'=>'raw',
         'filter'=>false
