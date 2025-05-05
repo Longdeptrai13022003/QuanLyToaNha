@@ -5,6 +5,25 @@ use \yii\helpers\Html;
 /* @var $typeHienThi string */
 $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
 ?>
+<style>
+    .status-badge {
+        padding: 5px 10px;
+        border-radius: 6px !important;
+        font-weight: 600;
+        font-size: 12px;
+        display: inline-block;
+    }
+
+    .status-paid {
+        background-color: #e6f7ee;
+        color: #28a745;
+    }
+
+    .status-unpaid {
+        background-color: #fbe9e7;
+        color: #dc3545;
+    }
+</style>
 <table class="table text-nowrap">
     <thead id="tieu-de">
     <tr>
@@ -82,7 +101,7 @@ $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
         <td><span class="pull-right"><?= Html::textInput('phu_phi',array_key_exists('Phụ phí', $result) ? $result['Phụ phí'] : '0',['class'=>'phu-phi form-control text-right hien-thi-so-tien']) ?></span></td>
         <td><span class="pull-right tong_tien"><?=$result['tong_tien']?></span></td>
         <td><span class="pull-right"><?=$result['da_thanh_toan']?></span></td>
-        <td><span class="pull-right"><?=$result['trang_thai']?></span></td>
+        <td><span class="pull-right status-badge <?= $result['trang_thai'] == 'GD đã thanh toán' ? 'status-paid' : 'status-unpaid' ?>"><?=$result['trang_thai']?></span></td>
     </tr>
     <?php endforeach;?>
     </tbody>

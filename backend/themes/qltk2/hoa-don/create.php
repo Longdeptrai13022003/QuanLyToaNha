@@ -29,7 +29,58 @@ $this->params['breadcrumbs'][] = $this->title;
     table tbody tr:hover {
         background-color: #009cff21;
     }
+    <style>
+     .hoa-don-create {
+         background: #f9f9f9;
+         padding: 30px;
+         border-radius: 12px;
+         box-shadow: 0 0 10px rgba(0,0,0,0.05);
+         font-family: 'Segoe UI', sans-serif;
+     }
+
+    .hoa-don-create h4 {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #333;
+    }
+
+    .form-control {
+        border-radius: 6px !important;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+    }
+
+    .margin-top-35 {
+        margin-top: 35px;
+    }
+
+    .btn-save-bill {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    #bang-hoa-don {
+        margin-top: 20px;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #e1e1e1;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    }
+
+
+    table tbody tr:hover {
+        background-color: #e8f7ff !important;
+    }
 </style>
+
+    </style>
 <div class="hoa-don-create">
     <?php $form = ActiveForm::begin([
         'options' => [

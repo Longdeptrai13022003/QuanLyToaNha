@@ -42,7 +42,7 @@ use yii\widgets\DetailView;
             <td><strong>Tòa nhà:</strong></td>
             <td><?= $toaNha->name?></td>
             <td><strong>Người thực hiện:</strong></td>
-            <td><?= $user->hoten?></td>
+            <td><?= isset($user->hoten) ? $user->hoten : ''?></td>
         </tr>
         <tr>
             <?php if ($thang != ''): ?>

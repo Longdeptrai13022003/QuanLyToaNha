@@ -129,7 +129,8 @@ class HoaDonController extends Controller
             ->all();
         $thucHiens = [];
         foreach ($giaoDichs as $giaoDich){
-            $thucHiens[] = User::findOne($giaoDich->user_id)->hoten;
+            $thucHiens[] = User::findOne($giaoDich->user_id)->hoten ?? 'Không rõ người dùng';
+
         }
         $khach = \common\models\User::findOne($phongKhach->khach_hang_id);
         $chiTietHoaDons = ChiTietHoaDon::findAll(['hoa_don_id'=>$id]);
@@ -1186,11 +1187,11 @@ class HoaDonController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         if ($path != ''){
             $file->saveAs($path);
-            $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
+//            $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
             return [
                 'success' => true,
                 'content' => 'Thêm ảnh số điện thành công',
-                'anh' => $domain.'/hinh-anh/'.$chiTiet->anh
+                'anh' => Yii::getAlias('@web').'/hinh-anh/'.$chiTiet->anh
             ];
         }
         return [

@@ -14,9 +14,14 @@ return [
         'attribute'=>'anhdaidien',
         'headerOptions' => ['width' => '10%'],
         'value' => function ($model) {
+            $imageWeb = Yii::getAlias('@web/hinh-anh/');
             $imageWebPath = Yii::getAlias('@web/hinh-anh/') . $model->anhdaidien;
             $imageFilePath = Yii::getAlias('@webroot/hinh-anh/') . $model->anhdaidien;
-            return is_file($imageFilePath) ? \yii\helpers\Html::img($imageWebPath, ['width' => '150px', 'id' => 'hinh-anh', 'class' => 'img-thumbnail']) : '';
+//            return is_file($imageFilePath) ? \yii\helpers\Html::img($imageWebPath, ['width' => '150px', 'id' => 'hinh-anh', 'class' => 'img-thumbnail']) : '';
+            return \yii\helpers\Html::img(
+                is_file($imageFilePath) ? $imageWebPath : $imageWeb . 'no-image.jpg',
+                ['width' => '150px', 'id' => 'hinh-anh', 'class' => 'img-thumbnail']
+            );
         },
         'format'=>'raw',
         'filter'=>false
