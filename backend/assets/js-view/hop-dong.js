@@ -264,11 +264,20 @@ $(document).ready(function () {
         var parts = input.split('/');
         return new Date(parts[2], parts[1] - 1, parts[0]);
     }
-    function createDatePicker(){
+    function createDatePicker() {
         $("#thoi-gian-tu-tu, #thoi-gian-tu-den, #thoi-gian-den-tu, #thoi-gian-den-den").datepicker({
             changeMonth: true,
             changeYear: true,
             dateFormat: 'dd/mm/yy'
+        }).on('keydown', function(e) {
+            const allowedKeys = [8, 9, 13, 27, 46, 37, 38, 39, 40];
+            if (
+                allowedKeys.indexOf(e.keyCode) !== -1 ||
+                (e.ctrlKey && ['A', 'C', 'V', 'X'].includes(e.key.toUpperCase()))
+            ) {
+                return;
+            }
+            e.preventDefault();
         });
     }
     createDatePicker();
