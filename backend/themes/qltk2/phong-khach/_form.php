@@ -17,8 +17,57 @@ use yii\jui\DatePicker;
 /* @var $toanhaids ArrayHelper */
 /* @var $domain string */
 /* @var $phongids ArrayHelper */
-
+use yii\helpers\Url;
+$domain = Url::base(true);
 ?>
+<?php
+$this->registerCss("
+    .phong-khach-form .form-group label {
+        font-weight: 600 !important;
+        color: #333 !important;
+    }
+
+    .phong-khach-form input.form-control,
+    .phong-khach-form select.form-control,
+    .phong-khach-form textarea.form-control {
+        border-radius: 6px !important;
+        border: 1px solid #ccc !important;
+        transition: border-color 0.3s ease !important;
+    }
+
+    .phong-khach-form .form-control:focus {
+        border-color: #007bff !important;
+        box-shadow: 0 0 4px rgba(0,123,255,0.5) !important;
+    }
+
+    .phong-khach-form .padding-top-35 {
+        padding-top: 35px !important;
+    }
+
+    .phong-khach-form .btn-primary, .btn-success {
+        border-radius: 4px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .phong-khach-form #block-moi-gioi {
+        margin-top: 15px !important;
+        border-top: 1px solid #ddd !important;
+        padding-top: 15px !important;
+        background-color: #f9f9f9 !important;
+    }
+
+    .phong-khach-form table td {
+        vertical-align: middle !important;
+        padding: 6px 8px !important;
+    }
+
+    .phong-khach-form .img-thumbnail {
+        max-height: 150px !important;
+        margin-bottom: 10px !important;
+    }
+");
+?>
+
 <div class="phong-khach-form">
 
     <?php $form = ActiveForm::begin([
@@ -108,18 +157,44 @@ use yii\jui\DatePicker;
                     </div>
                     <div class="row">
                         <?php if (!$model->isNewRecord):?>
+
                             <?php foreach ($fileHDs as $fileHD):?>
-                                <div class="col-md-6">
-                                    <?= Html::img($domain.'/hinh-anh/'.$fileHD->file,[
-//                            'width' => '300px',
-                                        'class' => 'img-thumbnail img-responsive',
-                                        'id' => 'hinh-anh',
-                                    ])?>
-                                    <?=Html::a('<i class="fa fa-trash"></i> Xóa','#', [
-                                        'class' => 'text-danger margin-top-5',
-                                        'id' => 'btn-xoa-anh-hop-dong',
-                                        'data-value' => $fileHD->id,
-                                    ]) ?>
+                                <?php
+                                $isWord = in_array(pathinfo($fileHD->file, PATHINFO_EXTENSION), ['doc', 'docx', 'pdf']);
+                                $fileUrl = $domain.'/hinh-anh/' . $fileHD->file;
+                                ?>
+                                <div class="col-md-6 text-center">
+                                    <?php if ($isWord): ?>
+                                        <a href="<?= $fileUrl ?>" download>
+                                            <?= Html::img($domain.'/hinh-anh/word.png',[
+                                                'width' => '100px',
+                                                'class' => 'img-thumbnail img-responsive',
+                                                'id' => 'hinh-anh',
+                                            ])?>
+                                        </a>
+                                        <div>
+                                            <?= Html::encode($fileHD->file) ?>
+                                        </div>
+                                        <?=Html::a('<i class="fa fa-trash"></i> Xóa','#', [
+                                            'class' => 'text-danger margin-top-5',
+                                            'id' => 'btn-xoa-anh-hop-dong',
+                                            'data-value' => $fileHD->id,
+                                        ]) ?>
+                                    <?php else: ?>
+                                        <?= Html::img($domain.'/hinh-anh/'.$fileHD->file,[
+                                            'width' => '300px',
+                                            'class' => 'img-thumbnail img-responsive',
+                                            'id' => 'hinh-anh',
+                                        ])?>
+                                        <div class="text-center">
+                                            <?= Html::encode($fileHD->file) ?>
+                                        </div>
+                                        <?=Html::a('<i class="fa fa-trash"></i> Xóa','#', [
+                                            'class' => 'text-danger margin-top-5',
+                                            'id' => 'btn-xoa-anh-hop-dong',
+                                            'data-value' => $fileHD->id,
+                                        ]) ?>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach;?>
                         <?php endif;?>

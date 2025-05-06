@@ -512,7 +512,7 @@ class UserController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Chỉnh sửa thông tin khách hàng hàng",
+                    'title'=> "Chỉnh sửa thông tin khách hàng",
                     'content'=>$this->renderAjax('khach-hang/update', [
                         'model' => $model,
                         'error' => $error,

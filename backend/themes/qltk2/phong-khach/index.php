@@ -16,6 +16,21 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
+<style>
+    /* Căn giữa các cột */
+    .text-center {
+        text-align: center !important; /* Đảm bảo căn giữa */
+    }
+
+    /* Căn giữa theo chiều dọc */
+    .align-middle {
+        vertical-align: middle !important; /* Căn giữa theo chiều dọc */
+    }
+    table tbody tr:hover {
+        background-color: #beebff; /* Màu nền nhẹ khi hover */
+        cursor: pointer;  /* Thay đổi con trỏ khi di chuột */
+    }
+</style>
 <div class="phong-khach-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -31,11 +46,11 @@ CrudAsset::register($this);
                     Html::a('<i class="glyphicon glyphicon-repeat"></i> Khôi phục lưới', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Khôi phục lưới'])
                 ],
-            ],          
-            'striped' => true,
+            ],
+            'striped' => false,
             'condensed' => true,
             'responsive' => true,
-            'responsiveWrap' => false,
+            'responsiveWrap' => true,
             'tableOptions' => ['class' => 'table table-borderd table-stripped text-nowrap'],
             'panel' => [
                 'type' => 'primary', 

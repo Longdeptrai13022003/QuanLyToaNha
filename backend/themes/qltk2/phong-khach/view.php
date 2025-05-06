@@ -83,6 +83,10 @@ use yii\widgets\DetailView;
                     </table>
                 </div>
             </div>
+            <h4 class="text-primary">FILE HỢP ĐỒNG</h4>
+            <div class="row">
+
+            </div>
             <h4 class="text-primary">THÔNG TIN KHÁCH HÀNG</h4>
             <div class="row">
                 <div class="col-md-6">
