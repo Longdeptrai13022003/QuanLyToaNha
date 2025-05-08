@@ -104,7 +104,8 @@ class PhongKhach extends \yii\db\ActiveRecord
             'chiet_khau' => 'Chiết khấu',
             'kieu_chiet_khau' => 'Kieu Chiet Khau',
             'so_tien_chiet_khau' => 'So Tien Chiet Khau',
-            'da_thanh_toan' => 'Da thanh toan'
+            'da_thanh_toan' => 'Da thanh toan',
+            'anh_hop_dong'=>'Anh hop dong'
         ];
     }
 

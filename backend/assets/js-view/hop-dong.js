@@ -840,4 +840,30 @@ $(document).ready(function () {
         var text = ($('#block-moi-gioi').is(':visible')) ? 'Ẩn thông tin môi giới' : 'Thêm thông tin môi giới';
         $('#toggle-moi-gioi').text(text);
     });
+    $(document).on('click','.btn-xoa-anh-json', function (e){
+        e.preventDefault();
+        var fileName = $(this).data('value');
+        var loai = $(this).data('loai');
+        var hopDongID = $('#hop_dong_id').val();
+        var parent = $(this).parent();
+        var img = parent.find('a');
+        if (confirm('Bạn có chắc chắn muốn xóa ảnh này?')) {
+            $.ajax({
+                url: 'index.php?r=phong-khach/xoa-anh-json',
+                type: 'post',
+                data: {fileName: fileName,loai: loai, hopDongID: hopDongID},
+                success: function (response) {
+                    if (response.success) {
+                        $('.thongbao').html('<div class="note note-success">' + response.content + '</div>');
+                        parent.remove();
+                    } else {
+                        alert(response.content);
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                }
+            });
+        }
+    });
 });

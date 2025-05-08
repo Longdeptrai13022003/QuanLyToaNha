@@ -30,6 +30,21 @@ CrudAsset::register($this);
         background-color: #beebff; /* Màu nền nhẹ khi hover */
         cursor: pointer;  /* Thay đổi con trỏ khi di chuột */
     }
+    .cccd-wrapper {
+        width: 100% !important;
+        height: 200px !important;
+        overflow: hidden !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+        margin-bottom: 10px !important;
+    }
+
+    .cccd-img {
+        width: 100% !important;
+        height: 180px !important;
+        object-fit: cover !important;
+        border-radius: 8px !important;
+    }
 </style>
 <div class="phong-khach-index">
     <div id="ajaxCrudDatatable">

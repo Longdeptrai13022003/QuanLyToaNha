@@ -85,7 +85,7 @@ use yii\widgets\DetailView;
             </div>
             <h4 class="text-primary">FILE HỢP ĐỒNG</h4>
             <div class="row">
-
+                
             </div>
             <h4 class="text-primary">THÔNG TIN KHÁCH HÀNG</h4>
             <div class="row">
@@ -114,14 +114,14 @@ use yii\widgets\DetailView;
                 <div class="col-md-12"><h4 class="text-primary">ẢNH 2 MẶT CCCD</h4></div>
                 <?php if($khach->anhcancuoc == ''): ?>
                     <div class="col-md-4">
-                        <?=Html::a("<img  class='example-image img-responsive' src='hinh-anh/no-image.jpg' width='100%'>",
+                        <?=Html::a("<img  class='cccd-img example-image img-responsive' src='hinh-anh/no-image.jpg' width='100%'>",
                             'hinh-anh/no-image.jpg',['class'=>'example-image-link img-thumbnail','data-lightbox'=>'roadtrip','target'=>'_blank'])?>
                     </div>
                 <?php else:?>
                     <?php $anhs =explode(',',$khach->anhcancuoc)?>
                     <?php foreach ($anhs as $anh): ?>
                         <div class="col-md-4">
-                            <?=Html::a("<img  class='example-image img-responsive' src='hinh-anh/$anh' width='100%'>",
+                            <?=Html::a("<img  class='cccd-img example-image img-responsive' src='hinh-anh/$anh' width='100%'>",
                                 'hinh-anh/'.$anh,['class'=>'example-image-link img-thumbnail','data-lightbox'=>'roadtrip','target'=>'_blank'])?>
                         </div>
                     <?php endforeach;?>

@@ -17,8 +17,14 @@ use yii\jui\DatePicker;
 /* @var $toanhaids ArrayHelper */
 /* @var $domain string */
 /* @var $phongids ArrayHelper */
+/* @var $giaoDichs backend\models\GiaoDich */
 use yii\helpers\Url;
 $domain = Url::base(true);
+$anhHopDongs = [];
+if(!$model->isNewRecord && !is_null($model->anh_hop_dong)){
+    $anhHopDongs = json_decode($model->anh_hop_dong,true);
+}
+
 ?>
 <?php
 $this->registerCss("
@@ -153,55 +159,62 @@ $this->registerCss("
                 <div class="col-md-6">
                     <div class="form-group">
                         <?= Html::label('File(s) hợp đồng')?>
-                        <?= Html::fileInput('file_hop_dong[]',null,['multiple'=>'multiple','class'=>'form-control'])?>
+                        <?= Html::fileInput('file_hop_dong[]',null,['multiple'=>'multiple','class'=>'form-control custom-file-input'])?>
                     </div>
                     <div class="row">
-                        <?php if (!$model->isNewRecord):?>
-
-                            <?php foreach ($fileHDs as $fileHD):?>
+                        <?php if (!$model->isNewRecord): ?>
+                            <?php foreach ($anhHopDongs as $anhHopDong): ?>
                                 <?php
-                                $isWord = in_array(pathinfo($fileHD->file, PATHINFO_EXTENSION), ['doc', 'docx', 'pdf']);
-                                $fileUrl = $domain.'/hinh-anh/' . $fileHD->file;
+                                $ext = strtolower(pathinfo($anhHopDong, PATHINFO_EXTENSION));
+                                $isDocument = in_array($ext, ['pdf', 'doc', 'docx']);
+                                $fileUrl = $domain . '/hinh-anh/' . rawurlencode($anhHopDong);
+                                $icon = ($ext === 'pdf') ? 'pdf.png' : 'word.png';
                                 ?>
-                                <div class="col-md-6 text-center">
-                                    <?php if ($isWord): ?>
-                                        <a href="<?= $fileUrl ?>" download>
-                                            <?= Html::img($domain.'/hinh-anh/word.png',[
-                                                'width' => '100px',
-                                                'class' => 'img-thumbnail img-responsive',
-                                                'id' => 'hinh-anh',
-                                            ])?>
-                                        </a>
-                                        <div>
-                                            <?= Html::encode($fileHD->file) ?>
-                                        </div>
-                                        <?=Html::a('<i class="fa fa-trash"></i> Xóa','#', [
-                                            'class' => 'text-danger margin-top-5',
-                                            'id' => 'btn-xoa-anh-hop-dong',
-                                            'data-value' => $fileHD->id,
+                                <div class="col-sm-6 col-md-4 text-center" style="margin-bottom: 20px;">
+                                    <div class="thumbnail">
+                                        <?php if ($isDocument): ?>
+                                            <!-- Tài liệu: hiển thị icon & tên file -->
+                                            <a href="<?= $fileUrl ?>" download title="Tải xuống <?= Html::encode($anhHopDong) ?>">
+                                                <?= Html::img("{$domain}/hinh-anh/{$icon}", [
+                                                    'width' => '80px',
+                                                    'class' => 'img-responsive center-block',
+                                                    'alt' => 'Tài liệu'
+                                                ]) ?>
+                                            </a>
+                                            <div class="caption text-center">
+                                                <p class="text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= Html::encode($anhHopDong) ?>">
+                                                    <?= Html::encode($anhHopDong) ?>
+                                                </p>
+                                            </div>
+                                        <?php else: ?>
+                                            <!-- Ảnh: hiển thị ảnh & lightbox -->
+                                            <a href="<?= $fileUrl ?>" class="example-image-link" data-lightbox="roadtrip" target="_blank">
+                                                <?= Html::img($fileUrl, [
+                                                    'class' => 'img-responsive',
+                                                    'style' => 'width:100%; height:auto; max-height:150px',
+                                                    'alt' => 'Ảnh hợp đồng'
+                                                ]) ?>
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <!-- Nút xóa chung -->
+                                        <?= Html::a('<i class="fa fa-trash"></i> Xóa', '#', [
+                                            'class' => 'btn btn-danger btn-xs btn-block btn-xoa-anh-json',
+                                            'data-value' => $anhHopDong,
+                                            'data-loai' => 'anh_hop_dong',
+                                            'style' => 'margin-top:10px;'
                                         ]) ?>
-                                    <?php else: ?>
-                                        <?= Html::img($domain.'/hinh-anh/'.$fileHD->file,[
-                                            'width' => '300px',
-                                            'class' => 'img-thumbnail img-responsive',
-                                            'id' => 'hinh-anh',
-                                        ])?>
-                                        <div class="text-center">
-                                            <?= Html::encode($fileHD->file) ?>
-                                        </div>
-                                        <?=Html::a('<i class="fa fa-trash"></i> Xóa','#', [
-                                            'class' => 'text-danger margin-top-5',
-                                            'id' => 'btn-xoa-anh-hop-dong',
-                                            'data-value' => $fileHD->id,
-                                        ]) ?>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
-                            <?php endforeach;?>
-                        <?php endif;?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                     <div class="form-group">
                         <?= Html::label('Ảnh chuyển khoản')?>
                         <?= Html::fileInput('anh_chuyen_khoan[]',null,['multiple'=>'multiple', 'class'=>'form-control', 'id'=>'anh-chuyen-khoan'])?>
+                    </div>
+                    <div class="row">
+
                     </div>
                     <?=$form->field($model,'ghi_chu')->textarea()->label('Ghi chú:')?>
                 </div>

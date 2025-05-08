@@ -58,7 +58,7 @@ class PhongKhachController extends Controller
         $arr_action = [
             'index','create','view','update','save-hop-dong','delete','xoa-file-hop-dong','thanh-toan','save-giao-dich','kiem-tra',
             'chuyen-khoan','get-list-hop-dong','thanh-toan-moi-gioi','save-moi-gioi','get-tien-dien','thue-ngan-han','get-list-phong',
-            'dong-phong','mo-phong','get-khach-hang','get-form-thong-tin','save-update','get-lich-dat','hoan-thanh'
+            'dong-phong','mo-phong','get-khach-hang','get-form-thong-tin','save-update','get-lich-dat','hoan-thanh','xoa-anh-json'
         ];
         $rules = [];
         $this->contentAPI = json_decode(file_get_contents('php://input'));
@@ -240,6 +240,7 @@ class PhongKhachController extends Controller
                     'tong_tien'=>$oldHoaDon->tong_tien,
                     'chi_phi_dich_vu'=>$oldHoaDon->chi_phi_dich_vu,
                     'so_nguoi' => $oldHoaDon->so_nguoi,
+                    'trang_thai' => $oldHoaDon->trang_thai,
                 ]);
 
                 //Giữ lại các giao dịch cũ đã tạo, không tính tiền cọc vì đã tạo trong quá trình sửa hđ rồi
@@ -385,8 +386,9 @@ class PhongKhachController extends Controller
                 $model->so_tien_moi_gioi = $model->moi_gioi;
             }
         }
-        $files = UploadedFile::getInstancesByName('file_hop_dong');
         $fileChuyenKhoans = UploadedFile::getInstancesByName('anh_chuyen_khoan');
+
+        $fileHopDongs = UploadedFile::getInstancesByName('file_hop_dong');
 
         $model->thanh_tien = $tongTien;
 
@@ -405,6 +407,7 @@ class PhongKhachController extends Controller
                 $giaoDich->khach_hang_id = $model->khach_hang_id;
                 $giaoDich->loai_giao_dich = GiaoDich::THANH_TOAN_HOP_DONG;
 
+//                Lưu ảnh chuyển khoản
                 $fileName = [];
                 foreach ($fileChuyenKhoans as $fileChuyenKhoan){
                     $fileName[] = $time.$fileChuyenKhoan->name;
@@ -415,6 +418,18 @@ class PhongKhachController extends Controller
                     foreach ($fileChuyenKhoans as $index => $fileChuyenKhoan){
                         $fileChuyenKhoan->saveAs(dirname(dirname(__DIR__)).'/hinh-anh/'.$fileName[$index]);
                     }
+            }
+
+//            Lưu ảnh hợp đồng
+            $fileName = [];
+            foreach ($fileHopDongs as $fileHopDong){
+                $fileName[] = $time.$fileHopDong->name;
+            }
+            $model->updateAttributes([
+                'anh_hop_dong' => json_encode($fileName,true)
+            ]);
+            foreach ($fileHopDongs as $index => $fileHopDong){
+                $fileHopDong->saveAs(dirname(dirname(__DIR__)).'/hinh-anh/'.$fileName[$index]);
             }
 
             $timeIndex = strtotime($model->thoi_gian_hop_dong_tu);
@@ -440,16 +455,6 @@ class PhongKhachController extends Controller
                     $this->createBill($timeIndex,$model);
                     $timeIndex = strtotime("+1 month",$timeIndex);
                 }
-                foreach ($files as $file){
-                    $fileHD = new FileHopDong();
-                    $fileHD->phong_khach_id = $model->id;
-                    $fileName = $time.$file->name;
-                    $fileHD->file = $fileName;
-                    if(!$fileHD->save()){
-                        return ['content'=>Html::errorSummary($fileHD),'success'=>false];
-                    }else
-                        $file->saveAs(dirname(dirname(__DIR__)).'/hinh-anh/'.$fileName);
-                }
                 $thanhTien = HoaDon::find()
                     ->andFilterWhere(['phong_khach_id'=>$model->id])
                     ->andFilterWhere(['active'=>1])
@@ -470,6 +475,7 @@ class PhongKhachController extends Controller
             'content' => 'Thông tin không hợp lệ'
         ];
     }
+
     /**
      * Displays a single PhongKhach model.
      * @param integer $id
@@ -557,6 +563,7 @@ class PhongKhachController extends Controller
         $dataProviderSale = $searchModelSale->search(\Yii::$app->request->queryParams);
         $khach = User::findOne($oldModel->khach_hang_id);
         $sale = User::findOne($oldModel->sale_id);
+        $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
 
         $fileHDs = FileHopDong::findAll(['phong_khach_id'=>$oldModel->id]);
 
@@ -574,13 +581,14 @@ class PhongKhachController extends Controller
             'dataProviderKhach' => $dataProviderKhach,
             'dataProviderSale' => $dataProviderSale,
             'packages' => $packages,
-            'sale' => $sale
+            'sale' => $sale,
+            'domain' => $domain
         ]);
     }
 
+
     public function actionSaveUpdate()
     {
-        $request = Yii::$app->request;
         $loi = '';
         //Load model cũ
         $oldModel = PhongKhach::findOne($_POST['hop_dong_id']);
@@ -678,8 +686,9 @@ class PhongKhachController extends Controller
                 $model->so_tien_moi_gioi = $model->moi_gioi;
             }
         }
-        $files = UploadedFile::getInstancesByName('file_hop_dong');
+
         $fileChuyenKhoans = UploadedFile::getInstancesByName('anh_chuyen_khoan');
+        $fileHopDongs = UploadedFile::getInstancesByName('file_hop_dong');
 
         $model->thanh_tien = $tongTien;
 
@@ -731,19 +740,48 @@ class PhongKhachController extends Controller
                     $this->createBill($timeIndex,$model,$oldModel->id);
                     $timeIndex = strtotime("+1 month",$timeIndex);
                 }
-                foreach ($files as $file){
-                    $fileHD = new FileHopDong();
-                    $fileHD->phong_khach_id = $model->id;
-                    $fileName = $time.$file->name;
-                    $fileHD->file = $fileName;
-                    if(!$fileHD->save()){
-                        return ['content'=>Html::errorSummary($fileHD),'success'=>false];
-                    }else
-                        $file->saveAs(dirname(dirname(__DIR__)).'/hinh-anh/'.$fileName);
-                }
             }else{
                 $this->createBill($timeIndex,$model,$oldModel->id);
             }
+//Lưu ảnh trạng thái
+//            $oldFileNames = json_decode($oldModel->anh_trang_thai, true);
+//            if (!is_array($oldFileNames)) {
+//                $oldFileNames = [];
+//            }
+//
+//            $newFileNames = [];
+//            foreach ($fileTrangThais as $fileTrangThai) {
+//                $newFileNames[] = $time . $fileTrangThai->name;
+//            }
+//            $mergedFileNames = array_merge($oldFileNames, $newFileNames);
+//            $model->updateAttributes([
+//                'anh_trang_thai' => json_encode($mergedFileNames)
+//            ]);
+//            if (!empty($newFileNames)) {
+//                foreach ($fileTrangThais as $index => $fileTrangThai) {
+//                    $fileTrangThai->saveAs(dirname(dirname(__DIR__)) . '/hinh-anh/' . $newFileNames[$index]);
+//                }
+//            }
+//            Lưu ảnh hợp đồng
+            $oldFileNames = json_decode($oldModel->anh_hop_dong, true);
+            if (!is_array($oldFileNames)) {
+                $oldFileNames = [];
+            }
+
+            $newFileNames = [];
+            foreach ($fileHopDongs as $fileHopDong) {
+                $newFileNames[] = $time . $fileHopDong->name;
+            }
+            $mergedFileNames = array_merge($oldFileNames, $newFileNames);
+            $model->updateAttributes([
+                'anh_hop_dong' => json_encode($mergedFileNames)
+            ]);
+            if (!empty($newFileNames)) {
+                foreach ($fileHopDongs as $index => $fileHopDong) {
+                    $fileHopDong->saveAs(dirname(dirname(__DIR__)) . '/hinh-anh/' . $newFileNames[$index]);
+                }
+            }
+
             $oldModel->afterDelete();
             $model->updateAttributes(['phong_cu_id'=>$oldModel->id]);
             return [
@@ -756,6 +794,7 @@ class PhongKhachController extends Controller
             'content' => 'Thông tin không hợp lệ'
         ];
     }
+
 
     /**
      * Delete an existing PhongKhach model.
@@ -1175,4 +1214,63 @@ class PhongKhachController extends Controller
             'content' => 'Không tìm thấy hợp đồng'
         ];
     }
+    //xoá ảnh hợp đồng
+    public function actionXoaAnhJson()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $hopDongId = $_POST['hopDongID'] ?? null;
+        $loai = $_POST['loai'] ?? null;
+        $fileName = $_POST['fileName'] ?? null;
+
+        $hopDong = PhongKhach::findOne($hopDongId);
+
+        if (is_null($hopDong)) {
+            return [
+                'success' => false,
+                'content' => 'Không tìm thấy hợp đồng',
+            ];
+        }
+
+        $fileAnhs = json_decode($hopDong->$loai, true) ?? [];
+
+        if (!in_array($fileName, $fileAnhs)) {
+            return [
+                'success' => false,
+                'content' => 'Không tìm thấy ảnh trong danh sách',
+            ];
+        }
+
+        // Xóa file vật lý
+        $filePath = dirname(dirname(__DIR__)) . '/hinh-anh/' . $fileName;
+        if (file_exists($filePath) && $fileName != 'no-image.jpg') {
+            if (!unlink($filePath)) {
+                return [
+                    'success' => false,
+                    'content' => 'Không thể xóa file vật lý',
+                ];
+            }
+        }
+
+        // Xóa khỏi mảng và cập nhật lại JSON
+        $updatedFiles = array_filter($fileAnhs, function($file) use ($fileName) {
+            return $file !== $fileName;
+        });
+
+        $hopDong->$loai = json_encode(array_values($updatedFiles));
+        if ($hopDong->save(false)) {
+            $url = CauHinh::findOne(['ghi_chu' => 'no_image'])->content;
+            $urlNoImage = "<img  class='example-image img-responsive' src=".$url."\" width='100%'>";
+            return [
+                'success' => true,
+                'content' => 'Xóa ảnh thành công',
+                'noImage' => $urlNoImage,
+            ];
+        }
+        return [
+            'success' => false,
+            'content' => 'Không thể lưu hợp đồng sau khi cập nhật danh sách ảnh',
+        ];
+    }
+
 }

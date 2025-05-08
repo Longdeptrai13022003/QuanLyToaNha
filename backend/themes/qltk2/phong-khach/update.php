@@ -19,6 +19,7 @@ use yii\helpers\Html;
 /* @var $dataProviderKhach \backend\models\QuanLyKhachHang[] */
 /* @var $searchModelKhach \backend\models\search\QuanLyKhachHangSearch */
 /* @var $dataProviderSale \backend\models\QuanLySale[] */
+/* @var $domain string */
 /* @var $searchModelSale \backend\models\search\QuanLySaleSearch */
 $this->title = 'Sửa hợp đồng khách: '.$khach->hoten;
 ?>
@@ -42,7 +43,8 @@ $this->title = 'Sửa hợp đồng khách: '.$khach->hoten;
         'packages' => $packages,
         'gios' => $gios,
         'phuts' => $phuts,
-        'sale' => $sale
+        'sale' => $sale,
+        'domain' => $domain
     ]) ?>
 </div>
 
