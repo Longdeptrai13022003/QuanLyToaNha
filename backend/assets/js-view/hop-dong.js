@@ -461,7 +461,23 @@ $(document).ready(function () {
         dienthoai = $(this).parent().parent().parent().find('.td-dien-thoai').text(),
         btnXoaSaleDaChon = "<a href=\"#\" class=\"text-danger\" id=\"xoa-sale-da-chon\"><i class=\"fa fa-close\"></i> Xóa</a>";
         $('#phongkhach-sale_id').val(idSale);
-        $('#sale-da-chon').html('<strong>Sale: </strong>'+hoten+' ('+dienthoai+') '+ btnXoaSaleDaChon);
+        // $('#sale-da-chon').html('<strong>Sale: </strong>'+hoten+' ('+dienthoai+') '+ btnXoaSaleDaChon);
+        var html = `
+        <div class="user-info">
+            <div class="user-icon" style="background-color: #0cbc87;">
+                <i class="fa fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <div class="user-name">` + hoten + `</div>
+                <div class="user-phone">` + dienthoai + `</div>
+            </div>
+            <a href="#" class="remove-user" id="xoa-sale-da-chon">
+                <i class="fa fa-times-circle"></i>Xoá
+            </a>
+        </div>
+        `;
+
+        $('#sale-da-chon').html(html);
     });
 
     $(document).on('click', '#btn-quay-lai-danh-sach', function (e){
