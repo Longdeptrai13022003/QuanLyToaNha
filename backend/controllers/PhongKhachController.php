@@ -58,7 +58,7 @@ class PhongKhachController extends Controller
         $arr_action = [
             'index','create','view','update','save-hop-dong','delete','xoa-file-hop-dong','thanh-toan','save-giao-dich','kiem-tra',
             'chuyen-khoan','get-list-hop-dong','thanh-toan-moi-gioi','save-moi-gioi','get-tien-dien','thue-ngan-han','get-list-phong',
-            'dong-phong','mo-phong','get-khach-hang','get-form-thong-tin','save-update','get-lich-dat','hoan-thanh','xoa-anh-json'
+            'dong-phong','mo-phong','get-khach-hang','get-form-thong-tin','save-update','get-lich-dat','hoan-thanh','xoa-anh-json','thong-ke-hop-dong'
         ];
         $rules = [];
         $this->contentAPI = json_decode(file_get_contents('php://input'));

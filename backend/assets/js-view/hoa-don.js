@@ -66,45 +66,55 @@ $(document).ready(function () {
         e.preventDefault();
         getNganHan();
     });
-    function updateTongTien(trLocal = null){
-        var tr = trLocal || window.tr; // Ưu tiên sử dụng trLocal, nếu không sẽ dùng tr toàn cục
-        if (!tr) {
-            console.error("Không tìm thấy đối tượng tr!");
+    function updateTongTien(panelLocal = null) {
+        var panel = panelLocal || window.panel; // Ưu tiên dùng panel truyền vào
+
+        if (!panel || panel.length === 0) {
+            console.error("Không tìm thấy đối tượng panel!");
             return;
         }
-        var id = tr.find('.check-chon').val();
-        // var bangDienID = $('#gia_dien').val();
 
-        var dienDau = tr.find('.so-dau').val(),
-            dienCuoi = tr.find('.so-cuoi').val(),
-            phuPhi = tr.find('.phu-phi').val();
+        var id = panel.data('id');
+        var dienDau = panel.find('.so-dau').val(),
+            dienCuoi = panel.find('.so-cuoi').val(),
+            phuPhi = panel.find('.phu-phi').val();
 
         var nuocDau = '-1',
             nuocCuoi = '-1';
-        if (tr.find('.so-nuoc-dau').length > 0) {
-            nuocDau = tr.find('.so-nuoc-dau').val();
-            nuocCuoi = tr.find('.so-nuoc-cuoi').val();
+        if (panel.find('.so-nuoc-dau').length > 0) {
+            nuocDau = panel.find('.so-nuoc-dau').val();
+            nuocCuoi = panel.find('.so-nuoc-cuoi').val();
         }
-        console.log(id);
 
         $.ajax({
             url: 'index.php?r=hoa-don/cap-nhap-dich-vu',
             type: 'post',
-            data: {dienDau: dienDau, dienCuoi: dienCuoi, nuocDau: nuocDau, nuocCuoi: nuocCuoi, phuPhi: phuPhi, hoaDonID: id, thang: $('#thang').val(), nam: $('#nam').val()},
+            data: {
+                dienDau: dienDau,
+                dienCuoi: dienCuoi,
+                nuocDau: nuocDau,
+                nuocCuoi: nuocCuoi,
+                phuPhi: phuPhi,
+                hoaDonID: id,
+                thang: $('#thang').val(),
+                nam: $('#nam').val()
+            },
             dataType: 'json',
-            success: function(data) {
-                if (data.success){
-                    tr.find('.tong_tien').html(data.thanh_tien);
-                    tr.find('.thanh-tien-dien').html(data.tienDien);
-                    tr.find('.thanh-tien-nuoc').html(data.tienNuoc);
+            success: function (data) {
+                if (data.success) {
+                    panel.find('.tong_tien').html(data.thanh_tien);
+                    panel.find('.thanh-tien-dien').html(data.tienDien);
+                    panel.find('.thanh-tien-nuoc').html(data.tienNuoc);
+
                     var doanhThu = $('.doanh-thu').html().toString().replace(/\./g, '');
-                    if (doanhThu.trim() !== ''){
+                    if (doanhThu.trim() !== '') {
                         $('.doanh-thu').html((parseInt(doanhThu) + parseInt(data.chenhLech)).toLocaleString('vi-VN'));
                     }
-                    if ($('#thanh-cong').is(':empty')){
+
+                    if ($('#thanh-cong').is(':empty')) {
                         $('#thanh-cong').html('<center><span class="text-success h4">Cập nhật hóa đơn thành công</span></center>');
-                        setTimeout(function() {
-                            $('#thanh-cong').fadeOut('slow', function() {
+                        setTimeout(function () {
+                            $('#thanh-cong').fadeOut('slow', function () {
                                 $(this).html('');
                                 $(this).show();
                             });
@@ -112,15 +122,16 @@ $(document).ready(function () {
                     }
                 }
             },
-            error: function(r1, r2) {
+            error: function (r1, r2) {
                 console.log(r1);
             }
         });
     }
 
+
     $(document).on('change input','.so-dau, .so-cuoi, .phu-phi',function (e){
         e.preventDefault();
-        tr = $(this).closest('tr');
+        tr = $(this).closest('.panel');
         updateTongTien(tr);
     });
 
@@ -337,7 +348,7 @@ $(document).ready(function () {
 
     $(document).on('change', '.so-cuoi', function () {
         const $this = $(this);
-        const $row = $this.closest('.row');
+        const $row = $this.closest('.panel');
         const $soDau = $row.find('.so-dau');
         const valDau = parseNumber($soDau.val());
         const valCuoi = parseNumber($this.val());
@@ -413,9 +424,9 @@ $(document).ready(function () {
 
     $(document).on('change', '.check-chon', function (e) {
         if ($(this).is(':checked')) {
-            $(this).closest('tr').css('background-color', 'rgba(66, 139, 202, 0.2)');
+            $(this).closest('.panel').css('border', '1px dashed #b48a78');
         } else {
-            $(this).closest('tr').css('background-color', '');
+            $(this).closest('.panel').css('border', 'none');
         }
     });
 
@@ -488,10 +499,14 @@ $(document).ready(function () {
 
     $(document).on('click', '.btn-update-member', function (e) {
         e.preventDefault();
-        let trLocal = $(this).closest('tr'); // Lưu tr cục bộ
-        var id = trLocal.find('.check-chon').val();
-        oCung = trLocal.find('.so-thanh-vien');
-        thanhTienNuoc = trLocal.find('.thanh-tien-nuoc');
+        // Lấy div panel cục bộ chứa nút nhấn
+        let panel = $(this).closest('.panel');
+        // Lấy giá trị data-id từ div panel
+        var id = panel.data('id');
+
+        // Lấy các phần tử khác nếu cần
+        var oCung = panel.find('.so-thanh-vien');
+        var thanhTienNuoc = panel.find('.thanh-tien-nuoc');
         $.dialog({
             content: function () {
                 dialogOCung = this;
@@ -506,7 +521,7 @@ $(document).ready(function () {
                     dialogOCung.setType('blue');
 
                     // Truyền trLocal cho hàm xử lý tiếp theo
-                    setupSaveOCungHandler(trLocal, thanhTienNuoc);
+                    setupSaveOCungHandler(panel, thanhTienNuoc);
                 }).error(function (r1, r2) {
                     dialogOCung.setContent(getMessage(r1.responseText));
                     return false;
@@ -538,7 +553,7 @@ $(document).ready(function () {
                 '<td><center><a href="#" class="text-danger xoa-o-cung"><i class="fa fa-trash"></i></a></center></td>');
         }
     });
-    $(document).on('click', 'tr',function (e){
+    $(document).on('click', '.panel',function (e){
         if ($(e.target).is('input[type="checkbox"]')) return;
         if ($(e.target).is('input[type="text"]')) return;
         if ($(e.target).is('input[type="file"]')) return;
@@ -554,7 +569,7 @@ $(document).ready(function () {
     $(document).on('change', '.anh-dien', function (e) {
         e.preventDefault();
         let fileInput = this.files[0];
-        var hang = $(this).closest('tr');
+        var hang = $(this).closest('.panel');
         var id = hang.find('.check-chon').val();
 
         if (fileInput) {
@@ -583,7 +598,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '.xoa-anh', function (e) {
         e.preventDefault();
-        var hang = $(this).closest('tr');
+        var hang = $(this).closest('.panel');
         var id = hang.find('.check-chon').val();
 
         if(confirm('Bạn có chắc chắn muốn xóa ảnh này?')){

@@ -452,7 +452,23 @@ $(document).ready(function () {
         dienthoai = $(this).parent().parent().parent().find('.td-dien-thoai').text(),
         btnXoaKhachDaChon = "<a href=\"#\" class=\"text-danger\" id=\"xoa-khach-da-chon\"><i class=\"fa fa-close\"></i> Xóa</a>";
         $('#phongkhach-khach_hang_id').val(idkhachhang);
-        $('#khach-hang-da-chon').html('<strong>Khách: </strong>'+hoten+' ('+dienthoai+') '+ btnXoaKhachDaChon);
+        // $('#khach-hang-da-chon').html('<strong>Khách: </strong>'+hoten+' ('+dienthoai+') '+ btnXoaKhachDaChon);
+        var html = `
+        <div class="user-info">
+            <div class="user-icon" style="background-color: #0cbc87;">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="user-details">
+                <div class="user-name">` + hoten + `</div>
+                <div class="user-phone">` + dienthoai + `</div>
+            </div>
+            <a href="#" class="remove-user" id="xoa-khach-da-chon">
+                <i class="fa fa-times-circle"></i>Xoá
+            </a>
+        </div>
+        `;
+
+        $('#khach-hang-da-chon').html(html);
     });
 
     $(document).on('click change', '.chon-sale-radio-btn', function (e){

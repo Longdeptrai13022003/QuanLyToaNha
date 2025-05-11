@@ -46,13 +46,37 @@ $(document).ready(function () {
                 count: 1
             },
             renderer: am5xy.AxisRendererX.new(root, {
-                minorGridEnabled: true
+                minorGridEnabled: true,
+                axisLabels: { // Thêm cấu hình cho nhãn trục
+                    paddingBottom: 5
+                },
+                axisFills: {},
+                strokeOpacity: 1,
+                strokeWidth: 1,
+                stroke: root.interfaceColors.get("alternativeBackground"),
+                title: am5.Label.new(root, { // Thêm title cho trục X
+                    text: "Thời gian"
+                })
             }),
             tooltip: am5.Tooltip.new(root, {})
         }));
 
         var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererY.new(root, {}),
+            renderer: am5xy.AxisRendererY.new(root, {
+                strokeOpacity: 1,
+                strokeWidth: 1,
+                stroke: root.interfaceColors.get("alternativeBackground"),
+                labels: {
+                    inside: root.verticalLayout
+                },
+                title: am5.Label.new(root, { // Thêm title cho trục Y
+                    text: "Số tiền",
+                    rotation: -90, // Xoay tiêu đề 90 độ
+                    centerY: am5.p50,
+                    centerX: am5.p50,
+                    paddingRight: 15
+                })
+            }),
             max: 200000000,  // Đặt mức tối đa lớn hơn
             extraMax: 0.1
         }));
@@ -206,4 +230,6 @@ $(document).ready(function () {
             }
         });
     });
+
 });
+

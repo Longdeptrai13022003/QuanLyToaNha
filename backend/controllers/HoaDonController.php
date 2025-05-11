@@ -140,9 +140,12 @@ class HoaDonController extends Controller
             $dichVus[$thietLapGia->name] = $chiTietHoaDon->thanh_tien;
         }
         $domain = \backend\models\CauHinh::findOne(['ghi_chu' => 'domain'])->content;
-        $anhDien = ChiTietHoaDon::find()
-            ->andFilterWhere(['hoa_don_id'=>$id])
-            ->andFilterWhere(['dich_vu_id'=>2])->one()->anh;
+        $chiTiet = ChiTietHoaDon::find()
+            ->andFilterWhere(['hoa_don_id' => $id])
+            ->andFilterWhere(['dich_vu_id' => 2])
+            ->one();
+
+        $anhDien = $chiTiet ? $chiTiet->anh : 'no-image.jpg';
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'title'=> "Hóa đơn khách ".$khach->hoten,
@@ -1065,15 +1068,28 @@ class HoaDonController extends Controller
 
     public function actionGetOCung()
     {
+        // Check if 'id' exists in the POST data
+        if (!isset($_POST['id'])) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'success' => false,
+                'title' => "Lỗi",
+                'content' => "Không tìm thấy ID hóa đơn"
+            ];
+        }
+
+        $hoaDonId = $_POST['id'];
+
         $chiTiet = QuanLyOCung::find()
-            ->andFilterWhere(['hoa_don_id'=>$_POST['id']])->all();
+            ->andFilterWhere(['hoa_don_id' => $hoaDonId])->all();
+
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'success' => true,
-            'title'=> "Danh sách người ở cùng",
-            'content'=>$this->renderAjax('form-o-cung', [
+            'title' => "Danh sách người ở cùng",
+            'content' => $this->renderAjax('form-o-cung', [
                 'chiTiets' => $chiTiet,
-                'hoaDonID' => $_POST['id']
+                'hoaDonID' => $hoaDonId
             ])
         ];
     }

@@ -51,7 +51,7 @@ $this->registerCss("
         border-radius: 12px !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         margin-bottom: 24px;
-        background-color: #fff;
+        background-color: #f5f7f7 !important;
         transition: all 0.3s ease;
     }
     
@@ -60,7 +60,7 @@ $this->registerCss("
     }
     
     .card-header {
-        background-color: #fff;
+        background-color: #f5f7f7;
         border-bottom: 1px solid #e9ecef;
         padding: 16px 20px;
         border-top-left-radius: 12px !important;
@@ -898,6 +898,8 @@ $this->registerCss("
                                         ) ?>
                                     </div>
                                     <div class="col-md-3">
+                                        <br>
+                                        <span style="font-weight: bold">Giờ vào</span>
                                         <?= Html::dropDownList(
                                             'gio_vao',
                                             $model->isNewRecord ? date('H') : DateTime::createFromFormat('Y-m-d H:i:s', $model->thoi_gian_hop_dong_tu)->format('H'),
@@ -906,6 +908,8 @@ $this->registerCss("
                                         ) ?>
                                     </div>
                                     <div class="col-md-3">
+                                        <br>
+                                        <span style="font-weight: bold">Phút vào</span>
                                         <?= Html::dropDownList(
                                             'phut_vao',
                                             $model->isNewRecord ? date('i') : DateTime::createFromFormat('Y-m-d H:i:s', $model->thoi_gian_hop_dong_tu)->format('i'),
@@ -927,6 +931,8 @@ $this->registerCss("
                                         ) ?>
                                     </div>
                                     <div class="col-md-3">
+                                        <br>
+                                        <span style="font-weight: bold">Giờ ra</span>
                                         <?= Html::dropDownList(
                                             'gio_ra',
                                             $model->isNewRecord ? date('H') : DateTime::createFromFormat('Y-m-d H:i:s', $model->thoi_gian_hop_dong_den)->format('H'),
@@ -935,6 +941,8 @@ $this->registerCss("
                                         ) ?>
                                     </div>
                                     <div class="col-md-3">
+                                        <br>
+                                        <span style="font-weight: bold">Phút ra</span>
                                         <?= Html::dropDownList(
                                             'phut_ra',
                                             $model->isNewRecord ? date('i') : DateTime::createFromFormat('Y-m-d H:i:s', $model->thoi_gian_hop_dong_den)->format('i'),

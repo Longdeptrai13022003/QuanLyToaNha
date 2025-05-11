@@ -1,6 +1,39 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap') !important;
-
+    /* Tổng thể */
+    .grid-view {
+        font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+        border: none;
+        margin-bottom: 30px !important;
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    .panel {
+        border-radius: 12px !important;
+        border: none !important;
+        box-shadow: none;
+    }
+    .panel-heading {
+        border-radius: 12px 12px 0 0 !important;
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        padding: 20px;
+        color: white;
+    }
+    .panel-title {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .panel-footer {
+        background-color: #f8f9fa;
+        border-radius: 0 0 12px 12px !important;
+        padding: 15px 20px;
+    }
     .contract-grid {
         background: #fff !important;
         border-radius: 10px !important;

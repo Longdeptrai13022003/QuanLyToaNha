@@ -152,7 +152,7 @@ class GiaoDich extends \yii\db\ActiveRecord
         $hoaDon = HoaDon::findOne($this->hoa_don_id);
         if (!is_null($hoaDon)) {
             $hoaDon->updateAttributes([
-                'da_thanh_toan'=>$this->so_tien_giao_dich
+                'da_thanh_toan' => $hoaDon->da_thanh_toan + $this->so_tien_giao_dich
             ]);
             if($hoaDon->da_thanh_toan == $hoaDon->tong_tien){
                 $hoaDon->updateAttributes([
