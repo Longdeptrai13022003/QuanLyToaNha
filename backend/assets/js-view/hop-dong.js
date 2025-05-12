@@ -898,4 +898,89 @@ $(document).ready(function () {
             });
         }
     });
+
+    $(document).on('click','.btn-gia-han', function (e){
+        e.preventDefault();
+        var modal = $('#modal-gia-han');
+        var hopDongID = $(this).data('value');
+        $.ajax({
+            url: 'index.php?r=phong-khach/get-gia-han-detail',
+            type: 'post',
+            data: {hopDongID: hopDongID},
+            success: function (response) {
+                if (response.success) {
+                    $('#ma-hop-dong-gia-han').html(response.maHopDong);
+                    $('#ket-thuc-hop-dong').html(response.ketThucHopDong);
+                    $('#thoi-gian-gia-han').val(response.thoiGianGiaHan);
+                    $('#gia-han-truoc-do').html(response.giaHanTruocDo);
+                    $('#so-thang-gia-han').html('1');
+                    $('#gia-han-id').val(hopDongID);
+                    modal.modal('show');
+                } else {
+                    alert(response.content);
+                }
+            },
+            error: function () {
+                alert('Thông tin hợp đồng không chính xác. Vui lòng thử lại.');
+            }
+        });
+    });
+    $(document).on('change','#thoi-gian-gia-han', function (e){
+        e.preventDefault();
+        let endDateStr = '';
+        if($('#gia-han-truoc-do').html().trim() === ''){
+            endDateStr = $('#ket-thuc-hop-dong').html();
+        }else{
+            endDateStr = $('#gia-han-truoc-do').html();
+        }
+        let giaHanStr = $(this).val();       // định dạng dd/mm/yyyy
+
+        // Tách ngày/tháng/năm
+        let [d1, m1, y1] = endDateStr.split('/');
+        let [d2, m2, y2] = giaHanStr.split('/');
+
+        let endDate = new Date(`${y1}-${m1}-${d1}`);
+        let giaHanDate = new Date(`${y2}-${m2}-${d2}`);
+
+        if (giaHanDate < endDate) {
+            alert('Thời gian gia hạn không được nhỏ hơn thời gian kết thúc hợp đồng!');
+            $('#so-thang-gia-han').html('0'); // hoặc đặt thành 0
+            return;
+        }
+
+        // Tính số tháng giữa 2 mốc
+        let soThang = (giaHanDate.getFullYear() - endDate.getFullYear()) * 12 + (giaHanDate.getMonth() - endDate.getMonth());
+
+        // Nếu ngày kết thúc gia hạn >= ngày kết thúc cũ thì cộng thêm 1 tháng
+        if (giaHanDate.getDate() >= endDate.getDate()) {
+            soThang++;
+        }
+
+        // Đảm bảo không ra số âm
+        if (soThang < 0) soThang = 0;
+
+        $('#so-thang-gia-han').html(soThang);
+    });
+    $(document).on('click','#btn-gia-han', function (e){
+        e.preventDefault();
+        var hopDongID = $('#gia-han-id').val();
+        var thoiGianGiaHan = $('#thoi-gian-gia-han').val();
+        var modal = $('#modal-gia-han');
+        $.ajax({
+            url: 'index.php?r=phong-khach/gia-han-hop-dong',
+            type: 'post',
+            data: {hopDongID: hopDongID, thoiGianGiaHan: thoiGianGiaHan},
+            success: function (response) {
+                if (response.success) {
+                    $('.thongbao').html('<div class="note note-success">' + response.content + '</div>');
+                    modal.modal('hide');
+                } else {
+                    alert(response.content);
+                }
+            },
+            error: function () {
+                alert('Thông tin hợp đồng không chính xác. Vui lòng thử lại.');
+            }
+        });
+    });
 });

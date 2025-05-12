@@ -1272,5 +1272,75 @@ class PhongKhachController extends Controller
             'content' => 'Không thể lưu hợp đồng sau khi cập nhật danh sách ảnh',
         ];
     }
+    //get-gia-han-detail
+    public function actionGetGiaHanDetail()
+    {
+        $hopDong = PhongKhach::findOne($_POST['hopDongID']);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(is_null($hopDong)){
+            return [
+                'success' => false,
+                'content' => 'Không tìm thấy hợp đồng, vui lòng thử lại'
+            ];
+        }
+        $timeEnd = DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_hop_dong_den);
+        $lastDayThisMonth = clone $timeEnd;
+        $lastDayThisMonth->modify('last day of this month');
 
+        $giaHanTruocDo = DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_gia_han)
+            ?: DateTime::createFromFormat('Y-m-d', $hopDong->thoi_gian_gia_han);
+
+        if ($timeEnd->format('d') == $lastDayThisMonth->format('d')) {
+            $giaHanDate = (clone $timeEnd)->modify('last day of next month');
+        } else {
+            $giaHanDate = $lastDayThisMonth;
+        }
+        return [
+            'success' => true,
+            'maHopDong' => $hopDong->ma_hop_dong,
+            'ketThucHopDong' => $timeEnd->format('d/m/Y'),
+            'thoiGianGiaHan' => $giaHanDate->format('d/m/Y'),
+            'giaHanTruocDo' => empty($giaHanTruocDo) ? '' : $giaHanTruocDo->format('d/m/Y'),
+        ];
+    }
+    public function actionGiaHanHopDong()
+    {
+        $hopDong = PhongKhach::findOne($_POST['hopDongID']);
+        $thoiGianGiaHanStr = $_POST['thoiGianGiaHan'];
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $date = DateTime::createFromFormat('d/m/Y', $thoiGianGiaHanStr);
+        $errors = DateTime::getLastErrors();
+        if (!$date || $errors['warning_count'] || $errors['error_count']) {
+            return [
+                'success' => false,
+                'message' => 'Thời gian gia hạn không đúng định dạng ngày/tháng/năm'
+            ];
+        }
+
+        //kiểm tra xem hợp đồng đã từng gia hạn chưa nếu rồi thì gia hạn tiếp
+        $giaHanTimestamp = strtotime($date->format('Y-m-d'));
+        $thoiGianKetThucStr = $hopDong->thoi_gian_gia_han ?: $hopDong->thoi_gian_hop_dong_den;
+        $ketThucTimestamp = DateTime::createFromFormat('Y-m-d H:i:s', $thoiGianKetThucStr);
+        $timeStampKT = strtotime('+1 day',strtotime($ketThucTimestamp->format('Y-m-d H:i:s')));
+
+        if ($giaHanTimestamp <= strtotime($thoiGianGiaHanStr)) {
+            return [
+                'success' => false,
+                'message' => 'Ngày gia hạn phải lớn hơn thời gian kết thúc hiện tại'
+            ];
+        }
+        $timeIndex = strtotime(date('Y-m-01',$timeStampKT));
+        while ($timeIndex <= strtotime($date->format('Y-m'))) {
+            $this->createBill($timeIndex,$hopDong,$timeStampKT,$giaHanTimestamp);
+            $timeIndex = strtotime("+1 month", $timeIndex);
+        }
+        $hopDong->updateAttributes([
+            'thoi_gian_gia_han' => $date->format('Y-m-d H:i:s'),
+        ]);
+        return [
+            'success' => true,
+            'content' => 'Gia hạn hợp đồng '.$hopDong->ma_hop_dong.' thành công'
+        ];
+    }
 }

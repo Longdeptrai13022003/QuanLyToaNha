@@ -16,36 +16,44 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
-<style>
-    /* Căn giữa các cột */
-    .text-center {
-        text-align: center !important; /* Đảm bảo căn giữa */
-    }
-
-    /* Căn giữa theo chiều dọc */
-    .align-middle {
-        vertical-align: middle !important; /* Căn giữa theo chiều dọc */
-    }
-    table tbody tr:hover {
-        background-color: #beebff; /* Màu nền nhẹ khi hover */
-        cursor: pointer;  /* Thay đổi con trỏ khi di chuột */
-    }
-    .cccd-wrapper {
-        width: 100% !important;
-        height: 200px !important;
-        overflow: hidden !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
-        margin-bottom: 10px !important;
-    }
-
-    .cccd-img {
-        width: 100% !important;
-        height: 180px !important;
-        object-fit: cover !important;
-        border-radius: 8px !important;
-    }
-</style>
+    <!-- Modal -->
+    <div class="modal fade" id="modal-gia-han" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="overflow: hidden;">
+                    <h4 class="modal-title" id="exampleModalLabel" style="float: left;">Gia hạn hợp đồng <span id="ma-hop-dong-gia-han"></span></h4>
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="gia-han-id" value="">
+                    <table class="table">
+                        <tr>
+                            <td><strong>Kết thúc hợp đồng:</strong></td>
+                            <td class="text-center"><span id="ket-thuc-hop-dong"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gia hạn trước đó:</strong></td>
+                            <td class="text-center"><span id="gia-han-truoc-do"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thời gian gia hạn:</strong></td>
+                            <td><input type="text" class="form-control text-center" id="thoi-gian-gia-han"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Số tháng gia hạn:</strong></td>
+                            <td class="text-right"><span id="so-thang-gia-han"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="btn-gia-han"><i class="fa fa-refresh"></i> Gia hạn</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="phong-khach-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -61,11 +69,11 @@ CrudAsset::register($this);
                     Html::a('<i class="glyphicon glyphicon-repeat"></i> Khôi phục lưới', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Khôi phục lưới'])
                 ],
-            ],
-            'striped' => false,
+            ],          
+            'striped' => true,
             'condensed' => true,
             'responsive' => true,
-            'responsiveWrap' => true,
+            'responsiveWrap' => false,
             'tableOptions' => ['class' => 'table table-borderd table-stripped text-nowrap'],
             'panel' => [
                 'type' => 'primary', 
