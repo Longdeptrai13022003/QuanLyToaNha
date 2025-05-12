@@ -1303,7 +1303,7 @@ class PhongKhachController extends Controller
         return [
             'success' => true,
             'maHopDong' => $hopDong->ma_hop_dong,
-            'ketThucHopDong' => $timeEnd->format('d/m/Y'),
+            'ketThucHopDong' => DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_hop_dong_den)->format('d/m/Y'),
             'thoiGianGiaHan' => $giaHanDate->format('d/m/Y'),
             'giaHanTruocDo' => empty($giaHanTruocDo) ? '' : $giaHanTruocDo->format('d/m/Y'),
         ];
