@@ -93,7 +93,7 @@ return [
         'attribute'=>'phong_id',
         'headerOptions' => ['width' => '1%'],
         'value' => function ($data) {
-            return $data->ten_phong.'<br/>'.$data->ten_toa_nha;
+            return $data->ten_phong.'/'.$data->ten_toa_nha;
         },
         'format'=>'raw',
         'filter' => \yii\helpers\Html::activeTextInput(
