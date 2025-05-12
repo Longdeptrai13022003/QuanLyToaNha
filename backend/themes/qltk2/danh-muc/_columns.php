@@ -42,7 +42,7 @@ return [
                 $currentTime = time();
 
                 if($inputTime > $limitTime){
-                    return '<center><span class="text-success">Có khách</span></center>';
+                    return '<center><span class="text-success">Có khách</span><br/><span class="text-primary">Kết thúc vào '.date('d/m/Y',$inputTime).'</span></center>';
                 }else{
                     $daysLeft = ceil(($inputTime - $currentTime) / (60 * 60 * 24)) + 1;
                     return '<center><span class="text-danger">Sắp hết hạn</span></br><span class="text-primary">Còn '.$daysLeft.' ngày</span></center>';
