@@ -1284,7 +1284,11 @@ class PhongKhachController extends Controller
                 'content' => 'Không tìm thấy hợp đồng, vui lòng thử lại'
             ];
         }
-        $timeEnd = DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_hop_dong_den);
+        if(empty($hopDong->thoi_gian_gia_han)){
+            $timeEnd = DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_hop_dong_den);
+        }else{
+            $timeEnd = DateTime::createFromFormat('Y-m-d H:i:s', $hopDong->thoi_gian_gia_han);
+        }
         $lastDayThisMonth = clone $timeEnd;
         $lastDayThisMonth->modify('last day of this month');
 
