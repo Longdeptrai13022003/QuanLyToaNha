@@ -283,17 +283,23 @@ class myAPI
             'options' => ['class' => $class]
         ]);
     }
-    public static function dateField2($name, $value, $yearRange = '2015:2018',$options= ['class' => 'form-control']){
+    public static function dateField2($name, $value, $yearRange = '2015:2018',$options= ['class' => 'form-control'], $maxDate = null){
+        $clientOptions = [
+            'changeMonth' => true,
+            'yearRange' => $yearRange,
+            'changeYear' => true,
+        ];
+
+        if ($maxDate !== null) {
+            $clientOptions['maxDate'] = $maxDate;
+        }
+
         return DatePicker::widget([
             'language' => 'vi',
             'dateFormat' => 'dd/MM/yyyy',
             'name' => $name,
             'value' => $value,
-            'clientOptions' => [
-                'changeMonth' => true,
-                'yearRange' => $yearRange,
-                'changeYear' => true,
-            ],
+            'clientOptions' => $clientOptions,
             'options' => $options
         ]);
     }
